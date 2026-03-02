@@ -1,0 +1,31 @@
+/* Reset minimal */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  font-size: var(--font-size-base); /* taille de police par défaut */
+  line-height: 1.5;
+  background-color: var(--color-bg); /* fond global */
+  color: var(--color-text);          /* couleur de texte globale */
+  height: 100%;
+
+}
+
+/* Images et médias toujours responsives */
+img,
+svg,
+video {
+  max-width: 100%;
+  display: block;
+}

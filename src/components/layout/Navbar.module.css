@@ -1,0 +1,35 @@
+/* Ultra minimal. Utilise tes variables si tu as theme.css */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: var(--color-bg, #fff);
+}
+
+.logo {
+  font-weight: 600;
+  color: var(--color-text, #000);
+}
+
+.list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.link,
+.linkActive {
+  text-decoration: none;
+  color: var(--color-text, #000);
+  padding: 0.25rem 0.125rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.linkActive {
+  border-bottom: 2px solid var(--color-primary, #2563eb);
+}

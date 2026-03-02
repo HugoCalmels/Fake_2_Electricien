@@ -1,0 +1,12 @@
+:root {
+  /* 🎨 Couleurs */
+  --color-bg: #ffffff;        /* Couleur de fond par défaut (fond global du site) */
+  --color-text: #000000;      /* Couleur du texte par défaut */
+  --color-primary: #2563eb;   /* Couleur principale (boutons, liens, accents) */
+
+  /* 🔠 Typographie */
+  --font-size-base: 16px;     /* Taille de police de base (1rem) */
+
+  /* 🧩 UI */
+  --radius: 4px;              /* Rayon de border-radius par défaut */
+}
