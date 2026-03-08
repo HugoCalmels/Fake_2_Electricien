@@ -1,10 +1,8 @@
-/* Reset minimal */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html,
@@ -12,20 +10,45 @@ body {
   height: 100%;
 }
 
-body {
-  font-family: system-ui, sans-serif;
-  font-size: var(--font-size-base); /* taille de police par défaut */
-  line-height: 1.5;
-  background-color: var(--color-bg); /* fond global */
-  color: var(--color-text);          /* couleur de texte globale */
-  height: 100%;
-
+body{
+  margin: 0;
+  background: var(--bg-blue);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Images et médias toujours responsives */
-img,
-svg,
-video {
-  max-width: 100%;
-  display: block;
+h1,
+h2,
+h3{
+  font-family: var(--font-title), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+a{
+  color: inherit;
+}
+
+.container{
+  width: min(var(--max), calc(100% - 56px));
+  margin: 0 auto;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+   var(--bg);
+  background-size: 140px 140px;
+  opacity: .55;
+}
+
+a:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
 }

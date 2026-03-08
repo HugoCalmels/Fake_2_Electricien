@@ -1,35 +1,268 @@
-/* Ultra minimal. Utilise tes variables si tu as theme.css */
+.header {
+  --nav-h: 72px;
+
+  --nav-border: var(--line);
+  --nav-text: var(--ink);
+  --nav-muted: var(--muted);
+  --nav-phone-bg: #ffffff;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+
+  min-height: var(--nav-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  overflow: visible;
+}
+
+.bar {
+  width: min(1400px, calc(100vw - 96px));
+  min-height: var(--nav-h);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 28px;
+}
+
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--nav-text);
+  white-space: nowrap;
+  line-height: 1.1;
+  z-index: 2;
+}
+
+.brandName {
+  font-family: var(--font-title), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.brandCity {
+  margin-top: 4px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--nav-muted);
+}
+
+.burger {
+  display: none;
+  appearance: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--nav-border);
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.burgerLine {
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: var(--nav-text);
+}
+
+.navWrap {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  background: var(--color-bg, #fff);
-}
-
-.logo {
-  font-weight: 600;
-  color: var(--color-text, #000);
-}
-
-.list {
-  display: flex;
-  gap: 1rem;
+  justify-content: center;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
   list-style: none;
+  flex-wrap: nowrap;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
 }
 
 .link,
 .linkActive {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--nav-text);
   text-decoration: none;
-  color: var(--color-text, #000);
-  padding: 0.25rem 0.125rem;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  padding: 6px 0;
 }
 
-.link:hover {
+.link:hover,
+.linkActive {
   text-decoration: underline;
 }
 
-.linkActive {
-  border-bottom: 2px solid var(--color-primary, #2563eb);
+.phone,
+.phoneMobile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 16px;
+
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+
+  background: var(--bg);
+  border: 3px solid var(--accent);
+
+
+  cursor: pointer;
+  transition: filter 0.18s ease;
+}
+
+.phone:hover,
+.phoneMobile:hover {
+  filter: brightness(0.96);
+}
+
+.phoneMobile {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .bar {
+    width: calc(100vw - 48px);
+    column-gap: 20px;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+
+  .link,
+  .linkActive {
+    font-size: 0.94rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .bar {
+    width: calc(100vw - 48px);
+    min-height: 72px;
+    grid-template-columns: auto 1fr auto;
+    column-gap: 14px;
+    padding: 14px 0;
+  }
+
+  .burger {
+    display: inline-flex;
+    justify-self: end;
+    z-index: 2;
+  }
+
+  .phone {
+    display: none;
+  }
+
+  .navWrap {
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .navWrapOpen {
+    display: flex;
+  }
+
+  .nav {
+    width: min(1400px, calc(100vw - 48px));
+    margin: 0 auto;
+    padding: 18px 0 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+
+  .navItem {
+    width: 100%;
+  }
+
+  .link,
+  .linkActive {
+    font-size: 0.95rem;
+    padding: 6px 0;
+  }
+
+  .phoneMobile {
+    display: inline-flex;
+    width: min(1400px, calc(100vw - 48px));
+    margin: 0 auto 18px;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .bar {
+    width: calc(100vw - 32px);
+  }
+
+  .nav {
+    width: calc(100vw - 32px);
+  }
+
+  .phoneMobile {
+    width: calc(100vw - 32px);
+  }
+
+  .brandName {
+    font-size: 0.95rem;
+  }
+
+  .brandCity {
+    font-size: 0.75rem;
+  }
+
+  .link,
+  .linkActive,
+  .phoneMobile,
+  .phone {
+    font-size: 0.9rem;
+  }
 }

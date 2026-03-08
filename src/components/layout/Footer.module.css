@@ -1,16 +1,88 @@
-.footer {
-  position: absolute;
-  bottom: 0;
-  left:0;
-  right:0;
-  padding: 1rem;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  background: var(--color-bg, #fff);
-  text-align: center;
+.footerShell {
+  position: relative;
+  z-index: 50;
+
+  margin-top: 48px;
+  border-top: 3px solid var(--line);
 
 }
 
-.text {
-  font-size: 0.875rem;
-  color: var(--color-text, #000);
+.footerInner {
+  position: relative;
+  z-index: 51;
+
+  width: min(1400px, calc(100vw - 96px));
+  margin: 0 auto;
+  padding: 28px 0 22px;
+}
+
+.footerMain {
+  position: relative;
+  z-index: 52;
+
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr 1fr;
+  gap: 28px;
+}
+
+.footerBlock {
+  min-width: 0;
+}
+
+.footerBrand {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footerKicker {
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.footerLabel {
+  color: #1f2937;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.footerLine {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.footerLine + .footerLine {
+  margin-top: 6px;
+}
+
+.footerBottom {
+  position: relative;
+  z-index: 52;
+
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 3px solid var(--line);
+
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footerMeta {
+  color: #1f2937;
+  font-size: 13px;
+}
+
+.footerDevLink {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footerDevLink:hover {
+  opacity: .7;
 }

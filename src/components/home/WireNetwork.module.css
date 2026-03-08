@@ -1,0 +1,66 @@
+.svg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.wire {
+  fill: none;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-width: var(--wire-w);
+  shape-rendering: geometricPrecision;
+  vector-effect: non-scaling-stroke;
+}
+
+.w0 {
+  stroke: var(--wire-red);
+}
+
+.w1 {
+  stroke: var(--wire-blue);
+}
+
+.w2 {
+  stroke: var(--wire-green);
+}
+
+.w3 {
+  stroke: var(--wire-orange, #f2994a);
+  opacity: 0.5;
+}
+
+.w4 {
+  stroke: var(--wire-yellow, #f2c94c);
+  opacity: 0.6;
+}
+
+.nodeCover {
+  fill: var(--bg, #f7f6f2);
+}
+
+.nodeRing {
+  fill: #fff;
+  filter:
+    drop-shadow(0 1px 1px rgba(0, 0, 0, 0.16))
+    drop-shadow(0 0 0.5px rgba(0, 0, 0, 0.18));
+}
+
+@media (max-width: 960px) {
+  .wire {
+    stroke-width: 5px;
+  }
+
+  .nodeRing {
+    opacity: 0.9;
+  }
+}
+
+@media (max-width: 720px) {
+  .svg {
+    display: none;
+  }
+}

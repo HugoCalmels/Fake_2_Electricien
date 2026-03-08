@@ -1,12 +1,26 @@
-:root {
-  /* 🎨 Couleurs */
-  --color-bg: #ffffff;        /* Couleur de fond par défaut (fond global du site) */
-  --color-text: #000000;      /* Couleur du texte par défaut */
-  --color-primary: #2563eb;   /* Couleur principale (boutons, liens, accents) */
+:root{
+  --bg: #fbfbf7; 
+  --bg-blue:#c2d3f9;
+  --ink: #0f1720;
+  --muted: rgba(15,23,32,.58);
 
-  /* 🔠 Typographie */
-  --font-size-base: 16px;     /* Taille de police de base (1rem) */
+  --line: rgba(15,23,32,.10);
+  --grid: rgba(15,23,32,.03);
 
-  /* 🧩 UI */
-  --radius: 4px;              /* Rayon de border-radius par défaut */
+  --accent: #3f557f;
+
+  --wire-red: rgba(220,38,38,.35);
+  --wire-blue: rgba(37, 99, 235, .28);
+  --wire-green: rgba(22,163,74,.28);
+
+  --wire-core: rgba(15,23,32,.18);
+  --wire-w: 6px;
+  --wire-gap: 10px;
+
+  --max: 1600px;
+
+  --cta-border: #2e4faf;
+  --cta-text: #1b2f6b;
+  --cta-hover: #edf2ff;
+  --cta-active: #e3ebff;
 }
