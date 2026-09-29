@@ -325,3 +325,18 @@
 .cardDesc {
   overflow-wrap: anywhere;
 }
+
+/* Coordonnées : une colonne aérée, sans cadres */
+.contactGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 8px 0 28px;
+}
+
+.contactCard {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}

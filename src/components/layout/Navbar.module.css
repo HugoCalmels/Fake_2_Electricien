@@ -123,14 +123,14 @@
   color: var(--nav-text);
   text-decoration: none;
   text-underline-offset: 0.3em;
-  text-decoration-thickness: 3px;
+  text-decoration-thickness: 4px;
   padding: 6px 0;
 }
 
 .link:hover,
 .linkActive {
   text-decoration: underline;
-  text-decoration-color: var(--mustard);
+  text-decoration-color: var(--c, var(--ink));
 }
 
 .phone,

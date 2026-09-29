@@ -47,7 +47,10 @@ export default function Footer() {
 
         <div className={styles.footerBottom}>
           <div className={styles.footerMeta}>
-            © {new Date().getFullYear()} {BRAND} — Projet vitrine fictif.
+            © {new Date().getFullYear()} {BRAND} — Projet vitrine fictif ·{" "}
+            <Link href="/mentions-legales" className={styles.footerDevLink}>
+              Mentions légales
+            </Link>
           </div>
 
           <div className={styles.footerMeta}>

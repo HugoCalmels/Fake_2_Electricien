@@ -33,7 +33,8 @@ function smoothScrollTo(targetY: number, duration = 650, onDone?: () => void) {
     const progress = Math.min(elapsed / duration, 1);
     const eased = easeOutCubic(progress);
 
-    window.scrollTo(0, startY + delta * eased);
+    // « instant » : l'animation est déjà faite ici, pas par le CSS
+    window.scrollTo({ top: startY + delta * eased, behavior: "instant" });
 
     if (progress < 1) {
       requestAnimationFrame(step);
@@ -227,7 +228,7 @@ export default function Navbar() {
           aria-label="Navigation principale"
         >
           <ul className={styles.nav}>
-            {ITEMS.map((it) => {
+            {ITEMS.map((it, i) => {
               const active = activeHref === it.href;
 
               return (
@@ -236,6 +237,7 @@ export default function Navbar() {
                     href={`/${it.href}`}
                     onClick={handleAnchorClick(it.href)}
                     className={active ? styles.linkActive : styles.link}
+                    style={{ "--c": `var(--cable-${i % 5})` } as React.CSSProperties}
                     aria-current={active ? "page" : undefined}
                   >
                     {it.label}

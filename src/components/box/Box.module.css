@@ -144,17 +144,6 @@
   background: var(--paper-dark);
 }
 
-/* Trame de points par-dessus la photo, façon affiche imprimée */
-.serviceMedia::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(29, 26, 22, 0.16) 0.8px, transparent 1.2px);
-  background-size: 5px 5px;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
 .serviceMedia img {
   display: block;
   width: 100%;
