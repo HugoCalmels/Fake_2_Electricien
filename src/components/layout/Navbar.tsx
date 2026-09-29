@@ -260,7 +260,7 @@ export default function Navbar() {
           href={`tel:${PHONE_TEL}`}
           aria-label={`Appeler le ${PHONE_DISPLAY}`}
         >
-          <span aria-hidden="true">☎</span> {PHONE_DISPLAY}
+          {PHONE_DISPLAY}
         </a>
       </div>
     </header>

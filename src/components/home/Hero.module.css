@@ -135,23 +135,27 @@
 /* ===== Infos clés, en liste fléchée ===== */
 .facts {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
-  gap: 8px 32px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .fact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 16px;
   font-weight: 600;
 }
 
+/* Coche bien visible, comme sur le portfolio */
 .fact::before {
-  content: "→";
-  margin-right: 10px;
-  font-weight: 700;
-  color: var(--metal);
+  content: "✓";
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cable-2);
 }
 
 /* ===== Voltmètre + disjoncteurs ===== */
