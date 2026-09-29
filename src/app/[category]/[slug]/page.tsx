@@ -3,8 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import boxStyles from "@/components/box/Box.module.css";
 import SectionBox from "@/components/box/SectionBox";
-import ServiceDetail from "@/components/box/ServiceDetail";
-import ServiceGrid from "@/components/box/ServiceGrid";
+import ServiceArticle from "@/components/box/ServiceArticle";
 import { CATEGORIES, SITE, findCategory } from "@/content/site";
 
 type Params = { category: string; slug: string };
@@ -36,9 +35,6 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   const { cat, service } = await resolve(params);
   if (!cat || !service) notFound();
 
-  const catIndex = CATEGORIES.indexOf(cat);
-  const others = cat.services.filter((s) => s.slug !== service.slug);
-
   return (
     <>
       <nav className={boxStyles.breadcrumb} aria-label="Fil d’Ariane">
@@ -57,27 +53,14 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <SectionBox
         id={service.slug}
         label={service.title}
-        colorIndex={catIndex}
+        colorIndex={CATEGORIES.indexOf(cat)}
         tagline={service.desc}
         wired={false}
         headingLevel={1}
+        last
       >
-        <ServiceDetail service={service} />
+        <ServiceArticle category={cat} service={service} />
       </SectionBox>
-
-      {others.length ? (
-        <SectionBox
-          id="autres"
-          label={`Autres prestations · ${cat.label}`}
-          colorIndex={catIndex}
-          href={`/${cat.id}`}
-          hrefLabel={`Tout ${cat.label}`}
-          wired={false}
-          last
-        >
-          <ServiceGrid categoryId={cat.id} items={others} />
-        </SectionBox>
-      ) : null}
     </>
   );
 }

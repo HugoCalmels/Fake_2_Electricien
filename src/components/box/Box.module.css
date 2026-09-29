@@ -294,126 +294,6 @@ a.serviceCard:hover .cardMore {
   text-underline-offset: 0.25em;
 }
 
-/* ===== Présentation d'une prestation ===== */
-.feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 22px;
-  padding: 18px;
-  border: 3px solid var(--ink);
-  background: var(--paper-light);
-}
-
-.featureMedia {
-  position: relative;
-  overflow: hidden;
-  min-height: 320px;
-  border: 3px solid var(--ink);
-  background: var(--paper-dark);
-}
-
-.featureMedia img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.75) contrast(1.08) sepia(0.2);
-}
-
-.featureText {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px 8px 8px 4px;
-}
-
-.featureIntro {
-  margin: 0 0 20px;
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-.checksTitle {
-  margin: 0 0 10px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.checks {
-  display: grid;
-  gap: 8px;
-  margin: 0 0 24px;
-  padding: 0;
-  list-style: none;
-}
-
-.checks li {
-  display: flex;
-  gap: 12px;
-  font-size: 15.5px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.checks li::before {
-  content: "✓";
-  flex: none;
-  font-size: 20px;
-  font-weight: 900;
-  line-height: 1.1;
-  color: var(--metal);
-  -webkit-text-stroke: 1.2px currentColor;
-}
-
-/* Mêmes boutons poussoirs que sur le coffret d'en-tête */
-.ctas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.ctaPrimary,
-.ctaSecondary {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 20px;
-  border: 3px solid var(--ink);
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 16px;
-  text-decoration: none;
-  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.22);
-  transition: background 0.15s ease;
-}
-
-.ctaPrimary {
-  background: var(--brick);
-  color: #fff;
-}
-
-.ctaPrimary:hover {
-  background: #b23c26;
-}
-
-.ctaSecondary {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.ctaSecondary:hover {
-  background: var(--paper-dark);
-}
-
-.ctaPrimary:active,
-.ctaSecondary:active {
-  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.22);
-}
-
 /* ===== Fil d'Ariane (pages de prestation) ===== */
 .breadcrumb {
   width: min(1400px, calc(100vw - 96px));
@@ -447,14 +327,6 @@ a.serviceCard:hover .cardMore {
 }
 
 @media (max-width: 960px) {
-  .feature {
-    grid-template-columns: 1fr;
-  }
-
-  .featureMedia {
-    min-height: 240px;
-  }
-
   .breadcrumb {
     width: calc(100vw - 48px);
     padding-top: 100px;
@@ -464,10 +336,6 @@ a.serviceCard:hover .cardMore {
 @media (max-width: 720px) {
   .more {
     margin-left: 0;
-  }
-
-  .feature {
-    padding: 12px;
   }
 
   .breadcrumb {
