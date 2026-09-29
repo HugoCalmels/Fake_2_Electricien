@@ -1,9 +1,9 @@
 .header {
   --nav-h: 72px;
 
-  --nav-border: var(--line);
+  --nav-border: var(--ink);
   --nav-text: var(--ink);
-  --nav-muted: var(--muted);
+  --nav-muted: var(--ink-soft);
 
   position: fixed;
   top: 0;
@@ -12,7 +12,7 @@
   z-index: 2000;
 
   min-height: var(--nav-h);
-  background: var(--paper-light);
+  background: var(--surface);
   border-bottom: 2px solid var(--ink);
   overflow: visible;
 }
@@ -75,7 +75,7 @@
   padding: 0;
   border: 2px solid var(--ink);
   border-radius: 4px;
-  background: var(--paper-light);
+  background: var(--surface);
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -130,7 +130,7 @@
 .link:hover,
 .linkActive {
   text-decoration: underline;
-  text-decoration-color: var(--mustard);
+  text-decoration-color: var(--ink);
 }
 
 .phone,
@@ -146,13 +146,13 @@
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  color: var(--surface);
   text-decoration: none;
   white-space: nowrap;
 
-  background: var(--brick);
-  border: 2px solid var(--brick);
-  border-radius: 4px;
+  background: var(--action);
+  border: var(--bw) solid var(--ink);
+  border-radius: var(--r);
 
   cursor: pointer;
   transition: background 0.15s ease;
@@ -160,7 +160,7 @@
 
 .phone:hover,
 .phoneMobile:hover {
-  background: #b23c26;
+  background: var(--action-hover);
 }
 
 .phoneMobile {
@@ -212,7 +212,7 @@
     align-items: stretch;
     justify-content: flex-start;
     padding: 0;
-    background: var(--paper-light);
+    background: var(--surface);
     border-bottom: 3px solid var(--ink);
   }
 

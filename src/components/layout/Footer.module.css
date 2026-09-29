@@ -3,8 +3,8 @@
   z-index: 50;
 
   border-top: 4px solid var(--ink);
-  background: var(--cable-4);
-  color: var(--paper-light);
+  background: var(--ink);
+  color: var(--surface);
 
 }
 
@@ -45,12 +45,12 @@
 }
 
 .footerKicker {
-  color: rgba(251, 245, 230, 0.75);
+  color: color-mix(in srgb, var(--surface) 70%, transparent);
   font-size: 15px;
 }
 
 .footerLabel {
-  color: rgba(251, 245, 230, 0.75);
+  color: color-mix(in srgb, var(--surface) 70%, transparent);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .12em;
@@ -59,7 +59,7 @@
 }
 
 .footerLine {
-  color: var(--paper-light);
+  color: var(--surface);
   font-size: 15px;
 }
 
@@ -73,7 +73,7 @@
 
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 2px solid rgba(251, 245, 230, 0.2);
+  border-top: 2px solid color-mix(in srgb, var(--surface) 20%, transparent);
 
   display: flex;
   justify-content: space-between;
@@ -81,12 +81,12 @@
 }
 
 .footerMeta {
-  color: rgba(251, 245, 230, 0.75);
+  color: color-mix(in srgb, var(--surface) 70%, transparent);
   font-size: 13px;
 }
 
 .footerDevLink {
-  color: var(--paper-light);
+  color: var(--surface);
   font-weight: 600;
   text-decoration: none;
 }
