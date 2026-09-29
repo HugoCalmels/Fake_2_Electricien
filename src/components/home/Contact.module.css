@@ -235,3 +235,95 @@
     min-height: 320px;
   }
 }
+/* ===== Habillage cartoon (contours encrés, coins arrondis, ombres plates) ===== */
+.contactCard,
+.form,
+.mapCard {
+  border-color: var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-light);
+  box-shadow: var(--shadow);
+}
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cardDesc {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cardDesc a {
+  text-decoration: none;
+}
+
+.kv {
+  font-size: 17px;
+}
+
+.input,
+.textarea {
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fff;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--cable-1);
+}
+
+.error {
+  border-color: var(--brick);
+}
+
+.formHint {
+  color: var(--brick);
+  font-size: 13px;
+}
+
+.submit {
+  height: 46px;
+  padding: 0 22px;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  background: var(--brick);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.submitIdle {
+  opacity: 0.6;
+}
+
+.success {
+  margin: 0;
+  padding: 10px 14px;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  background: #e6f0dc;
+  font-size: 14px;
+}
+
+.map {
+  border-color: var(--ink);
+  border-radius: 6px;
+}
+
+.map iframe {
+  filter: sepia(0.2) saturate(0.85);
+}
+
+.contactGrid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.cardDesc {
+  overflow-wrap: anywhere;
+}

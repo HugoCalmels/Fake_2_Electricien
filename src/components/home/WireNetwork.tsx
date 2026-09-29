@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import styles from "./WireNetwork.module.css";
 
 type Target = {
@@ -10,25 +10,42 @@ type Target = {
   trunkStart?: boolean;
 };
 
-const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
+// Un câble = 3 traits superposés : contour encre, gaine colorée, reflet
+type CablePaths = {
+  outline: SVGPathElement | null;
+  sheath: SVGPathElement | null;
+  shine: SVGPathElement | null;
+};
 
-function donutPath(cx: number, cy: number, rOuter: number, rInner: number) {
-  return [
-    `M ${cx + rOuter} ${cy}`,
-    `A ${rOuter} ${rOuter} 0 1 0 ${cx - rOuter} ${cy}`,
-    `A ${rOuter} ${rOuter} 0 1 0 ${cx + rOuter} ${cy}`,
-    `Z`,
-    `M ${cx + rInner} ${cy}`,
-    `A ${rInner} ${rInner} 0 1 1 ${cx - rInner} ${cy}`,
-    `A ${rInner} ${rInner} 0 1 1 ${cx + rInner} ${cy}`,
-    `Z`,
-  ].join(" ");
-}
+const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
 function snap(v: number) {
   if (typeof window === "undefined") return v;
   const dpr = window.devicePixelRatio || 1;
   return Math.round(v * dpr) / dpr;
+}
+
+function setCable(c: CablePaths | undefined, d: string, shine: string) {
+  if (!c) return;
+  c.outline?.setAttribute("d", d);
+  c.sheath?.setAttribute("d", d);
+  c.shine?.setAttribute("d", shine);
+}
+
+function Cable({
+  wireIndex,
+  store,
+}: {
+  wireIndex: number;
+  store: (el: SVGPathElement | null, part: keyof CablePaths) => void;
+}) {
+  return (
+    <>
+      <path ref={(el) => store(el, "outline")} className={styles.outline} />
+      <path ref={(el) => store(el, "sheath")} className={`${styles.sheath} ${styles[`c${wireIndex}`]}`} />
+      <path ref={(el) => store(el, "shine")} className={styles.shine} />
+    </>
+  );
 }
 
 export default function WireNetwork({
@@ -43,23 +60,19 @@ export default function WireNetwork({
   const svgRef = useRef<SVGSVGElement | null>(null);
   const clipRectRef = useRef<SVGRectElement | null>(null);
 
-  const trunkRefs = useRef<Array<SVGPathElement | null>>([]);
-  const branchRefs = useRef<Record<string, SVGPathElement | null>>({});
-  const nodeCoverRefs = useRef<Record<string, SVGCircleElement | null>>({});
-  const nodeRingRefs = useRef<Record<string, SVGPathElement | null>>({});
+  const trunkRefs = useRef<CablePaths[]>([]);
+  const branchRefs = useRef<Record<string, CablePaths>>({});
+  const terminalRefs = useRef<Record<string, SVGGElement | null>>({});
 
   const rafRef = useRef<number>(0);
 
-  const clipId = useMemo(() => `wire-clip-${Math.random().toString(16).slice(2)}`, []);
+  // useId : identique côté serveur et client (Math.random cassait l'hydratation)
+  const clipId = `wire-clip-${useId().replace(/:/g, "")}`;
 
   useEffect(() => {
-    const rOuter = 5.4;
-    const rInner = 4.1;
-    const coverR = 6.2;
-    const cut = 6.0;
-    const EPS = 0.35;
-    const GAP = 12;
-    const RIGHT_INSET = 10;
+    const GAP = 18;
+    const RIGHT_INSET = 14;
+    const SHINE = 2; // décalage du reflet vers le haut / la gauche
 
     const measureAndDraw = () => {
       const vpW = window.innerWidth;
@@ -99,43 +112,31 @@ export default function WireNetwork({
         if (t.affectsStop === false) continue;
         const r = rects[t.key];
         if (!r) continue;
-        const y = snap(clamp(r.top + r.height * 0.55, 0, vpH));
+        const y = snap(clamp(r.top + r.height * 0.5, 0, vpH));
         stopY[t.wireIndex] = Math.min(stopY[t.wireIndex], y);
       }
 
       for (let i = 0; i < wiresCount; i += 1) {
         const y1 = startY[i] ?? 0;
-        const y2 = Number.isFinite(stopY[i]) ? stopY[i] : vpH;
+        const y2 = Number.isFinite(stopY[i]) ? stopY[i] : vpH + 20;
         const yTop = snap(Math.min(y1, y2));
         const yBot = snap(Math.max(y1, y2));
         const x = xs[i];
 
-        const trunk = trunkRefs.current[i];
-        if (trunk) {
-          trunk.setAttribute("d", `M ${x} ${yTop} L ${x} ${yBot}`);
-        }
+        setCable(trunkRefs.current[i], `M ${x} ${yTop} L ${x} ${yBot}`, `M ${x - SHINE} ${yTop} L ${x - SHINE} ${yBot}`);
       }
 
       for (const t of targets) {
         const r = rects[t.key];
-        const branch = branchRefs.current[t.key];
-        const nodeCover = nodeCoverRefs.current[t.key];
-        const nodeRing = nodeRingRefs.current[t.key];
-
-        if (!r || !branch || !nodeCover || !nodeRing) continue;
+        const terminal = terminalRefs.current[t.key];
+        if (!r || !terminal) continue;
 
         const jy = snap(clamp(r.top + r.height * 0.5, 0, vpH));
         const jx = xs[t.wireIndex];
         const xTo = snap(r.right);
 
-        const dir = xTo >= jx ? 1 : -1;
-        const xStart = snap(jx + dir * (cut + EPS));
-
-        branch.setAttribute("d", `M ${xStart} ${jy} L ${xTo} ${jy}`);
-        nodeCover.setAttribute("cx", String(jx));
-        nodeCover.setAttribute("cy", String(jy));
-        nodeCover.setAttribute("r", String(coverR));
-        nodeRing.setAttribute("d", donutPath(jx, jy, rOuter, rInner));
+        setCable(branchRefs.current[t.key], `M ${jx} ${jy} L ${xTo} ${jy}`, `M ${jx} ${jy - SHINE} L ${xTo} ${jy - SHINE}`);
+        terminal.setAttribute("transform", `translate(${jx} ${jy})`);
       }
     };
 
@@ -145,6 +146,8 @@ export default function WireNetwork({
     };
 
     scheduleDraw();
+    // Les polices changent la hauteur des blocs une fois chargées
+    document.fonts?.ready.then(scheduleDraw);
 
     window.addEventListener("scroll", scheduleDraw, { passive: true });
     window.addEventListener("resize", scheduleDraw);
@@ -156,6 +159,18 @@ export default function WireNetwork({
     };
   }, [targets, wiresCount, frameSelector]);
 
+  const storeTrunk = (i: number) => (el: SVGPathElement | null, part: keyof CablePaths) => {
+    trunkRefs.current[i] ??= { outline: null, sheath: null, shine: null };
+    trunkRefs.current[i][part] = el;
+  };
+  const storeBranch = (key: string) => (el: SVGPathElement | null, part: keyof CablePaths) => {
+    branchRefs.current[key] ??= { outline: null, sheath: null, shine: null };
+    branchRefs.current[key][part] = el;
+  };
+
+  // Dessinés du dernier au premier câble : le câble 0 passe par-dessus les autres
+  const order = Array.from({ length: wiresCount }, (_, i) => wiresCount - 1 - i);
+
   return (
     <svg ref={svgRef} className={styles.svg} width="100%" height="100%" aria-hidden="true">
       <defs>
@@ -165,39 +180,28 @@ export default function WireNetwork({
       </defs>
 
       <g clipPath={`url(#${clipId})`}>
-        {Array.from({ length: wiresCount }, (_, i) => (
-          <path
-            key={`trunk-${i}`}
-            ref={(el) => {
-              trunkRefs.current[i] = el;
-            }}
-            className={`${styles.wire} ${styles[`w${i}`]}`}
-          />
-        ))}
+        {order.map((i) => (
+          <g key={`cable-${i}`}>
+            <Cable wireIndex={i} store={storeTrunk(i)} />
 
-        {targets.map((t) => (
-          <g key={`g-${t.key}`}>
-            <path
-              ref={(el) => {
-                branchRefs.current[t.key] = el;
-              }}
-              className={`${styles.wire} ${styles[`w${t.wireIndex}`]}`}
-            />
-
-            <circle
-              ref={(el) => {
-                nodeCoverRefs.current[t.key] = el;
-              }}
-              className={styles.nodeCover}
-            />
-
-            <path
-              ref={(el) => {
-                nodeRingRefs.current[t.key] = el;
-              }}
-              fillRule="evenodd"
-              className={styles.nodeRing}
-            />
+            {targets
+              .filter((t) => t.wireIndex === i)
+              .map((t) => (
+                <g key={`branch-${t.key}`}>
+                  <Cable wireIndex={i} store={storeBranch(t.key)} />
+                  {/* Borne de raccordement à la jonction */}
+                  <g
+                    ref={(el) => {
+                      terminalRefs.current[t.key] = el;
+                    }}
+                    className={styles.terminal}
+                  >
+                    <rect x="-9" y="-9" width="18" height="18" rx="4" />
+                    <circle cx="0" cy="0" r="3.2" />
+                    <line x1="-2" y1="-2" x2="2" y2="2" />
+                  </g>
+                </g>
+              ))}
           </g>
         ))}
       </g>

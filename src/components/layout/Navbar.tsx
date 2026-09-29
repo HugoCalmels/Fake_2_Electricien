@@ -3,21 +3,17 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import styles from "./Navbar.module.css";
+import Logo from "./Logo";
+import { SECTIONS, SITE } from "@/content/site";
 
 type Item = { href: string; label: string };
 
-const ITEMS: Item[] = [
-  { href: "#installations", label: "Installations" },
-  { href: "#renovations", label: "Rénovation" },
-  { href: "#depannage", label: "Dépannage" },
-  { href: "#realisations", label: "Réalisations" },
-  { href: "#contact", label: "Contact" },
-];
+const ITEMS: Item[] = SECTIONS.map((s) => ({ href: `#${s.id}`, label: s.label }));
 
-const BRAND = "FakeElec";
-const CITY = "Toulouse";
-const PHONE_DISPLAY = "06 52 35 37 96";
-const PHONE_TEL = "0652353796";
+const BRAND = SITE.brand;
+const CITY = SITE.city;
+const PHONE_DISPLAY = SITE.phoneDisplay;
+const PHONE_TEL = SITE.phoneTel;
 
 const NAV_HEIGHT = 72;
 const SCROLL_OFFSET = NAV_HEIGHT + 18;
@@ -205,8 +201,11 @@ export default function Navbar() {
           aria-label={`${BRAND} - accueil`}
           onClick={handleBrandClick}
         >
-          <span className={styles.brandName}>{BRAND}</span>
-          <span className={styles.brandCity}>{CITY}</span>
+          <Logo className={styles.logo} />
+          <span className={styles.brandText}>
+            <span className={styles.brandName}>{BRAND}</span>
+            <span className={styles.brandCity}>Électricien · {CITY}</span>
+          </span>
         </Link>
 
         <button
@@ -261,7 +260,7 @@ export default function Navbar() {
           href={`tel:${PHONE_TEL}`}
           aria-label={`Appeler le ${PHONE_DISPLAY}`}
         >
-          {PHONE_DISPLAY}
+          <span aria-hidden="true">☎</span> {PHONE_DISPLAY}
         </a>
       </div>
     </header>

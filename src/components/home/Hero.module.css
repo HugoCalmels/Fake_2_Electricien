@@ -4,141 +4,311 @@
 }
 
 .hero {
-  min-height: calc(100vh - 72px);
-  display: grid;
-  align-items: center;
   position: relative;
   z-index: 1;
-}
-
-.heroGrid {
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: repeat(12, 1fr);
+  align-items: center;
+  padding: 120px 0 110px;
 }
 
-.heroBox {
-  grid-column: 2 / span 9;
-  grid-row: 3 / span 8;
-
+/* ===== Le tableau électrique ===== */
+.panel {
   position: relative;
-  overflow: hidden;
-  box-sizing: border-box;
-
-  display: grid;
-  align-content: center;
-
-  padding: clamp(32px, 3vw, 56px);
-
-  border: 3px solid var(--line);
-  background: var(--bg);
-  backdrop-filter: blur(2px);
-
-  transform: translateX(-24px);
+  /* Espace libre à droite : les câbles sortent du tableau et descendent là */
+  width: calc(100% - 200px);
+  border: 4px solid var(--ink);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 40%),
+    var(--steel);
+  box-shadow: 8px 8px 0 var(--ink);
 }
 
-.heroContent {
-  max-width: 760px;
+.plate {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-bottom: 4px solid var(--ink);
+  border-radius: 14px 14px 0 0;
+  background: var(--cable-4);
+  color: var(--paper-light);
 }
 
-.brand {
-  margin: 0 0 18px;
-  font-size: clamp(52px, 6.5vw, 92px);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-  font-weight: 700;
+.rivet {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  border: 2.5px solid var(--ink);
+  background: var(--steel);
 }
 
-.subTitle {
-  display: inline-block;
-  margin-bottom: 24px;
-  font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 18px;
-  letter-spacing: 0.12em;
-  font-weight: 700;
+.plateText {
+  flex: 1;
+  font-family: var(--font-title), system-ui, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  line-height: 1;
+}
 
-  border: 3px solid var(--line);
-  padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(2px);
+.plateTag {
+  padding: 4px 10px;
+  border: 2.5px solid var(--ink);
+  border-radius: 6px;
+  background: var(--mustard);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.panelBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+}
+
+/* ===== Texte ===== */
+.intro {
+  padding: clamp(28px, 3.4vw, 52px);
+  border-right: 4px solid var(--ink);
+  background: var(--paper-light);
+  border-radius: 0 0 0 14px;
+}
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 18px;
+  padding: 7px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  background: var(--mustard);
+  box-shadow: var(--shadow-sm);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0 0 18px;
+  font-size: clamp(34px, 3.6vw, 52px);
+  line-height: 1.02;
+  color: var(--ink);
 }
 
 .lead {
-  max-width: 640px;
+  max-width: 560px;
   margin: 0 0 28px;
-  font-family: var(--font-body), system-ui, sans-serif;
   font-size: 18px;
-  line-height: 1.5;
-  letter-spacing: -0.01em;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 22px;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.ctaPrimary {
+  background: var(--brick);
+  color: #fff;
+}
+
+.ctaSecondary {
+  background: var(--paper-light);
   color: var(--ink);
+}
+
+.ctaPrimary:hover,
+.ctaSecondary:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.ctaPrimary:active,
+.ctaSecondary:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
 }
 
 .facts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  max-width: 760px;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .fact {
-  border: 3px solid var(--line);
-  background: rgba(255, 255, 255, 0.45);
-  padding: 16px;
+  padding: 12px 14px;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  background: var(--paper);
 }
 
-.factValue {
+.fact strong {
   display: block;
-  margin-bottom: 6px;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.1;
+  font-size: 15px;
+  line-height: 1.2;
 }
 
-.factLabel {
+.fact span {
   display: block;
+  margin-top: 3px;
   font-size: 13px;
   color: var(--muted);
-  line-height: 1.35;
 }
 
-.heroRightVoid {
-  grid-column: 12 / span 1;
-  grid-row: 1 / span 12;
+/* ===== Voltmètre + disjoncteurs ===== */
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 26px 0 26px 26px;
 }
 
-.heroPin {
+.voltmeter {
+  display: block;
+  width: calc(100% - 26px);
+  height: auto;
+}
+
+.vmBody { fill: var(--cable-4); stroke: var(--ink); stroke-width: 4; }
+.vmFace { fill: var(--paper-light); stroke: var(--ink); stroke-width: 3; }
+.vmRed { fill: none; stroke: var(--brick); stroke-width: 7; }
+.vmTick { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+.vmNum { font-family: var(--font-body), sans-serif; font-size: 10px; font-weight: 700; fill: var(--ink); }
+.vmUnit { font-family: var(--font-title), sans-serif; font-size: 11px; fill: var(--ink); letter-spacing: 0.1em; }
+.vmNeedle { stroke: var(--brick); stroke-width: 4; stroke-linecap: round; }
+.vmPivot { fill: var(--ink); }
+.vmBase { fill: var(--ink); }
+.vmBaseText { font-family: var(--font-body), sans-serif; font-size: 11px; font-weight: 700; fill: var(--mustard); letter-spacing: 0.08em; }
+
+.breakers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.breaker {
+  --c: var(--cable-0);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 6px 8px;
+  /* Collé à la paroi droite du tableau, pour que le câble en sorte */
+  margin-right: 0;
+  border: 3px solid var(--ink);
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+  background: var(--paper-light);
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease;
+}
+
+.breaker:hover {
+  background: #fff;
+}
+
+.b0 { --c: var(--cable-0); }
+.b1 { --c: var(--cable-1); }
+.b2 { --c: var(--cable-2); }
+.b3 { --c: var(--cable-3); }
+.b4 { --c: var(--cable-4); }
+
+/* Le module du disjoncteur, manette levée (en service) */
+.switch {
+  position: relative;
+  width: 30px;
+  height: 38px;
+  flex: none;
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.lever {
   position: absolute;
-  right: -1px;
-  top: 50%;
-  width: 2px;
-  height: 2px;
-  transform: translate(0, -50%);
-  opacity: 0;
-  pointer-events: none;
+  left: 50%;
+  top: 4px;
+  width: 12px;
+  height: 17px;
+  transform: translateX(-50%);
+  border: 2.5px solid var(--ink);
+  border-radius: 3px;
+  background: var(--c);
 }
 
-.pin0 { transform: translate(0, calc(-50% - 24px)); }
-.pin1 { transform: translate(0, calc(-50% - 12px)); }
-.pin2 { transform: translate(0, calc(-50% + 0px)); }
-.pin3 { transform: translate(0, calc(-50% + 12px)); }
-.pin4 { transform: translate(0, calc(-50% + 24px)); }
+.breakerLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-title), system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
-@media (max-width: 1100px) {
-  .heroBox {
-    grid-column: 2 / span 10;
-    transform: none;
+.breakerNum {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 22px;
+  border: 2.5px solid var(--ink);
+  border-radius: 5px;
+  background: var(--c);
+  color: #fff;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+/* Presse-étoupe sur la paroi du tableau : point de sortie du câble */
+.gland {
+  position: absolute;
+  top: 50%;
+  right: -18px;
+  width: 16px;
+  height: 22px;
+  transform: translateY(-50%);
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  background: var(--steel-dark);
+}
+
+@media (max-width: 1180px) {
+  .panelBody {
+    grid-template-columns: minmax(0, 1fr) 290px;
   }
 
-  .brand {
-    font-size: clamp(46px, 6vw, 76px);
-  }
-
-  .lead {
-    max-width: 580px;
-    font-size: 17px;
+  .facts {
+    grid-template-columns: 1fr;
+    max-width: 360px;
   }
 }
 
@@ -149,59 +319,29 @@
 
   .hero {
     min-height: auto;
-    padding-top: 112px;
-    padding-bottom: 48px;
-    align-items: start;
+    padding: 104px 0 72px;
   }
 
-  .heroGrid {
-    height: auto;
-    display: block;
+  .panel {
+    width: calc(100% - 110px);
   }
 
-  .heroBox {
-    grid-column: auto;
-    grid-row: auto;
-    transform: none;
-    padding: 28px;
-  }
-
-  .heroRightVoid {
-    display: none;
-  }
-
-  .brand {
-    font-size: clamp(40px, 9vw, 64px);
-    margin-bottom: 14px;
-  }
-
-  .subTitle {
-    font-size: 16px;
-    padding: 12px 14px;
-    margin-bottom: 18px;
-  }
-
-  .lead {
-    max-width: 100%;
-    font-size: 16px;
-    margin-bottom: 22px;
-  }
-
-  .facts {
+  .panelBody {
     grid-template-columns: 1fr;
-    max-width: 420px;
   }
 
-  .fact {
-    padding: 14px;
+  .intro {
+    border-right: 0;
+    border-bottom: 4px solid var(--ink);
+    border-radius: 0;
   }
 
-  .factValue {
-    font-size: 16px;
+  .board {
+    padding: 22px 0 22px 22px;
   }
 
-  .factLabel {
-    font-size: 12px;
+  .voltmeter {
+    max-width: 280px;
   }
 }
 
@@ -210,69 +350,41 @@
     width: calc(100vw - 32px);
   }
 
-  .hero {
-    padding-top: 96px;
-    padding-bottom: 32px;
+  .panel {
+    width: 100%;
+    box-shadow: 5px 5px 0 var(--ink);
   }
 
-  .heroBox {
+  .plateText {
+    font-size: 12px;
+  }
+
+  .plateTag {
+    display: none;
+  }
+
+  .board {
     padding: 20px;
-    border-width: 2px;
   }
 
-  .brand {
-    font-size: clamp(34px, 12vw, 52px);
-    margin-bottom: 12px;
+  .breaker {
+    margin-right: 0;
+    border-right: 3px solid var(--ink);
+    border-radius: 10px;
   }
 
-  .subTitle {
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    padding: 10px 12px;
-    margin-bottom: 16px;
-    border-width: 2px;
+  /* Sans câbles sur mobile, pas de presse-étoupe */
+  .gland {
+    display: none;
   }
 
   .lead {
-    font-size: 15px;
-    line-height: 1.45;
-    margin-bottom: 18px;
+    font-size: 16px;
   }
 
-  .facts {
-    gap: 10px;
-    max-width: none;
-  }
-
-  .fact {
-    border-width: 2px;
-    padding: 12px;
-  }
-
-  .factValue {
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .factLabel {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 420px) {
-  .hero {
-    padding-top: 88px;
-  }
-
-  .heroBox {
-    padding: 16px;
-  }
-
-  .brand {
-    font-size: 30px;
-  }
-
-  .subTitle {
+  .ctaPrimary,
+  .ctaSecondary {
     width: 100%;
+    justify-content: center;
   }
 }

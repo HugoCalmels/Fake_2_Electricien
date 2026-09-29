@@ -2,28 +2,6 @@
   position: relative;
 }
 
-/* ===== Fake debug frame (1400) ===== */
-.fakeFrame {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(1400px, calc(100vw - 96px));
-  height: 100vh;
-  pointer-events: none;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.02);
-
-}
-
-.fakeFrame::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: rgba(37, 99, 235, 0.22);
-}
-
 .frame {
   width: min(1400px, calc(100vw - 96px));
   margin: 0 auto;
@@ -33,74 +11,98 @@
 .section {
   position: relative;
   z-index: 1;
-  padding: 0 0 160px;
+  padding: 0 0 150px;
 }
 
 .sectionLast {
-  padding: 0 0 180px;
   position: relative;
   z-index: 1;
+  padding: 0 0 160px;
 }
 
 .sectionInner {
   position: relative;
-  margin-top: 0;
   padding-top: 18px;
 }
 
+/* Étiquette de section : même look que le disjoncteur qui l'alimente */
 .sectionTitle {
+  --c: var(--cable-0);
   position: absolute;
   top: 0;
   left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 12px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  background: var(--paper-light);
+  box-shadow: var(--shadow-sm);
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
-  display: inline-block;
-  font-size: 18px;
-  letter-spacing: 0.12em;
+.t0 { --c: var(--cable-0); }
+.t1 { --c: var(--cable-1); }
+.t2 { --c: var(--cable-2); }
+.t3 { --c: var(--cable-3); }
+.t4 { --c: var(--cable-4); }
+
+.sectionNum {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 28px;
+  border: 2.5px solid var(--ink);
+  border-radius: 6px;
+  background: var(--c);
+  color: #fff;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 14px;
   font-weight: 700;
-
-  border: 3px solid var(--line);
-  padding: 14px 18px;
-  background: var(--bg);
-  backdrop-filter: blur(2px);
+  letter-spacing: 0;
 }
 
 .sectionBody {
-  padding-top: 76px;
-
-
-  max-width: 1400px;
+  padding-top: 84px;
 }
 
-.kv {
+.tagline {
+  max-width: 640px;
+  margin: 0 0 22px;
+  font-size: 17px;
+  line-height: 1.5;
   color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 18px;
 }
 
-/* ===== Service grids ===== */
+/* ===== Cards de prestations ===== */
 .serviceGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  margin-right: 8%;
+  gap: 22px;
+  /* Laisse la place aux câbles qui descendent à droite */
+  margin-right: 130px;
 }
 
 .serviceCard {
-  border: 3px solid var(--line);
-  background: var(--bg);
-  padding: 12px;
-  transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 12px 16px;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-light);
+  box-shadow: var(--shadow);
 }
 
 .serviceMedia {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 3px solid var(--line);
-  margin-bottom: 12px;
-  background: var(--bg);
+  margin-bottom: 14px;
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper-dark);
 }
 
 .serviceMedia img {
@@ -108,131 +110,30 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Léger traitement rétro pour harmoniser des photos d'origines différentes */
+  filter: saturate(0.82) contrast(1.05) sepia(0.12);
 }
 
 .serviceTitle {
-  font-size: 15px;
+  margin: 0 0 6px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 6px;
+  letter-spacing: 0;
 }
 
 .serviceDesc {
-  font-size: 13px;
+  margin: 0;
+  font-size: 14.5px;
   line-height: 1.5;
   color: var(--muted);
 }
 
-/* futur état cliquable possible */
-.serviceCard[data-clickable="true"] {
-  cursor: pointer;
-}
-
-.serviceCard[data-clickable="true"]:hover {
-  transform: translateY(-2px);
-  border-color: var(--wire-blue);
-  box-shadow: 0 8px 18px rgba(15, 23, 32, 0.06);
-}
-
-/* ===== Existing cards ===== */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin: 18px 0;
-}
-
-.card {
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(2px);
-  padding: 14px;
-}
-
-.cardMedia {
-  height: 160px;
-  margin-bottom: 12px;
-  border: 1px solid var(--line);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.22)),
-    rgba(255, 255, 255, 0.5);
-}
-
-.cardTitle {
-  font-weight: 650;
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-
-.cardDesc {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.bullets {
-  margin: 14px 0 0;
-  padding-left: 18px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-/* ===== Contact ===== */
-.contactGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin: 18px 0;
-}
-
-.contactCard {
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(2px);
-  padding: 14px;
-}
-
-.smallMuted {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 6px;
-}
-
-.formFake {
-  margin-top: 18px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(2px);
-  padding: 14px;
-}
-
-.formRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.fakeInput,
-.fakeInputWide {
-  border: 1px solid var(--line);
-  padding: 12px;
-  color: var(--muted);
-  font-size: 13px;
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.fakeInputWide {
-  grid-column: 1 / -1;
-}
-
-.fakeButton {
-  display: inline-block;
-  border: 1px solid var(--line);
-  padding: 12px 14px;
-  font-size: 13px;
-  background: rgba(255, 255, 255, 0.75);
+@media (max-width: 1180px) {
+  .serviceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 960px) {
@@ -240,26 +141,26 @@
     width: calc(100vw - 48px);
   }
 
-  .fakeFrame {
-    width: calc(100vw - 48px);
-
-  }
-
-  .serviceGrid,
-  .cards,
-  .contactGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .formRow {
-    grid-template-columns: 1fr;
+  .serviceGrid {
+    margin-right: 110px;
   }
 
   .section {
-    padding-bottom: 120px;
+    padding-bottom: 110px;
+  }
+}
+
+@media (max-width: 720px) {
+  .frame {
+    width: calc(100vw - 32px);
   }
 
-  .sectionLast {
-    padding-bottom: 140px;
+  .serviceGrid {
+    grid-template-columns: 1fr;
+    margin-right: 0;
+  }
+
+  .sectionTitle {
+    font-size: 17px;
   }
 }

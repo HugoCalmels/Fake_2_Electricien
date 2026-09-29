@@ -2,8 +2,9 @@
   position: relative;
   z-index: 50;
 
-  margin-top: 48px;
-  border-top: 3px solid var(--line);
+  border-top: 4px solid var(--ink);
+  background: var(--cable-4);
+  color: var(--paper-light);
 
 }
 
@@ -30,19 +31,26 @@
 }
 
 .footerBrand {
-  color: var(--ink);
-  font-size: 16px;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 10px;
+  font-family: var(--font-title), system-ui, sans-serif;
+  font-size: 20px;
+}
+
+.footerLogo {
+  width: 36px;
+  height: 36px;
 }
 
 .footerKicker {
-  color: #1f2937;
+  color: rgba(251, 245, 230, 0.75);
   font-size: 15px;
 }
 
 .footerLabel {
-  color: #1f2937;
+  color: rgba(251, 245, 230, 0.75);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .12em;
@@ -51,7 +59,7 @@
 }
 
 .footerLine {
-  color: var(--ink);
+  color: var(--paper-light);
   font-size: 15px;
 }
 
@@ -65,7 +73,7 @@
 
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 3px solid var(--line);
+  border-top: 2px solid rgba(251, 245, 230, 0.2);
 
   display: flex;
   justify-content: space-between;
@@ -73,12 +81,12 @@
 }
 
 .footerMeta {
-  color: #1f2937;
+  color: rgba(251, 245, 230, 0.75);
   font-size: 13px;
 }
 
 .footerDevLink {
-  color: var(--ink);
+  color: var(--paper-light);
   font-weight: 600;
   text-decoration: none;
 }

@@ -4,7 +4,6 @@
   --nav-border: var(--line);
   --nav-text: var(--ink);
   --nav-muted: var(--muted);
-  --nav-phone-bg: #ffffff;
 
   position: fixed;
   top: 0;
@@ -13,8 +12,8 @@
   z-index: 2000;
 
   min-height: var(--nav-h);
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  background: var(--paper-light);
+  border-bottom: 3px solid var(--ink);
   overflow: visible;
 }
 
@@ -31,9 +30,8 @@
 
 .brand {
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
   color: var(--nav-text);
   white-space: nowrap;
@@ -41,12 +39,23 @@
   z-index: 2;
 }
 
+.logo {
+  width: 42px;
+  height: 42px;
+  flex: none;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
 .brandName {
   font-family: var(--font-title), system-ui, sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
 }
 
 .brandCity {
@@ -65,8 +74,9 @@
   width: 42px;
   height: 42px;
   padding: 0;
-  border: 1px solid var(--nav-border);
-  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper-light);
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -77,7 +87,8 @@
 .burgerLine {
   display: block;
   width: 18px;
-  height: 1px;
+  height: 3px;
+  border-radius: 2px;
   background: var(--nav-text);
 }
 
@@ -108,19 +119,19 @@
 .linkActive {
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 0.98rem;
-  font-weight: 450;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.01em;
   color: var(--nav-text);
   text-decoration: none;
-  text-underline-offset: 0.22em;
-  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 3px;
   padding: 6px 0;
 }
 
 .link:hover,
 .linkActive {
   text-decoration: underline;
+  text-decoration-color: var(--mustard);
 }
 
 .phone,
@@ -128,29 +139,31 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
+  gap: 8px;
+  height: 42px;
   padding: 0 16px;
 
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--accent);
+  color: #fff;
   text-decoration: none;
   white-space: nowrap;
 
-  background: var(--bg);
-  border: 3px solid var(--accent);
-
+  background: var(--brick);
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
 
   cursor: pointer;
-  transition: filter 0.18s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .phone:hover,
 .phoneMobile:hover {
-  filter: brightness(0.96);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 
 .phoneMobile {
@@ -202,8 +215,8 @@
     align-items: stretch;
     justify-content: flex-start;
     padding: 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
+    background: var(--paper-light);
+    border-bottom: 3px solid var(--ink);
   }
 
   .navWrapOpen {
@@ -252,7 +265,12 @@
   }
 
   .brandName {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
   }
 
   .brandCity {

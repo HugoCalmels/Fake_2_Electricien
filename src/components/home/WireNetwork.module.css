@@ -7,56 +7,58 @@
   transform: translateZ(0);
 }
 
-.wire {
+/* ===== Câbles : contour encre + gaine colorée + reflet ===== */
+.outline,
+.sheath,
+.shine {
   fill: none;
   stroke-linecap: butt;
-  stroke-linejoin: miter;
-  stroke-width: var(--wire-w);
   shape-rendering: geometricPrecision;
   vector-effect: non-scaling-stroke;
 }
 
-.w0 {
-  stroke: var(--wire-red);
+.outline {
+  stroke: var(--ink);
+  stroke-width: 12px;
 }
 
-.w1 {
-  stroke: var(--wire-blue);
+.sheath {
+  stroke-width: 7px;
 }
 
-.w2 {
-  stroke: var(--wire-green);
+.shine {
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.6px;
 }
 
-.w3 {
-  stroke: var(--wire-orange, #f2994a);
-  opacity: 0.5;
+.c0 { stroke: var(--cable-0); }
+.c1 { stroke: var(--cable-1); }
+.c2 { stroke: var(--cable-2); }
+.c3 { stroke: var(--cable-3); }
+.c4 { stroke: var(--cable-4); }
+
+/* ===== Borne de raccordement ===== */
+.terminal rect {
+  fill: var(--paper-light);
+  stroke: var(--ink);
+  stroke-width: 2.5px;
 }
 
-.w4 {
-  stroke: var(--wire-yellow, #f2c94c);
-  opacity: 0.6;
+.terminal circle {
+  fill: var(--steel);
+  stroke: var(--ink);
+  stroke-width: 1.8px;
 }
 
-.nodeCover {
-  fill: var(--bg, #f7f6f2);
-}
-
-.nodeRing {
-  fill: #fff;
-  filter:
-    drop-shadow(0 1px 1px rgba(0, 0, 0, 0.16))
-    drop-shadow(0 0 0.5px rgba(0, 0, 0, 0.18));
+.terminal line {
+  stroke: var(--ink);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
 }
 
 @media (max-width: 960px) {
-  .wire {
-    stroke-width: 5px;
-  }
-
-  .nodeRing {
-    opacity: 0.9;
-  }
+  .outline { stroke-width: 10px; }
+  .sheath { stroke-width: 6px; }
 }
 
 @media (max-width: 720px) {

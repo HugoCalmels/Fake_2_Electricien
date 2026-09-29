@@ -1,12 +1,15 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
 
-const BRAND = "FakeElec";
-const PHONE = "06 52 35 37 96";
-const EMAIL = "contact@exemple.fr";
-const CITY = "Toulouse";
-const ZONE = "Toulouse et périphérie";
-const HOURS = "Lun–Sam • 8h–19h";
+import Logo from "./Logo";
+import { SITE } from "@/content/site";
+
+const BRAND = SITE.brand;
+const PHONE = SITE.phoneDisplay;
+const EMAIL = SITE.email;
+const CITY = SITE.city;
+const ZONE = SITE.zone;
+const HOURS = SITE.hours;
 
 export default function Footer() {
   return (
@@ -14,7 +17,10 @@ export default function Footer() {
       <div className={styles.footerInner}>
         <div className={styles.footerMain}>
           <div className={styles.footerBlock}>
-            <div className={styles.footerBrand}>{BRAND}</div>
+            <div className={styles.footerBrand}>
+              <Logo className={styles.footerLogo} />
+              {BRAND}
+            </div>
             <div className={styles.footerKicker}>
               Électricité générale · rénovation · dépannage
             </div>
@@ -35,6 +41,7 @@ export default function Footer() {
           <div className={styles.footerBlock}>
             <div className={styles.footerLabel}>Horaires</div>
             <div className={styles.footerLine}>{HOURS}</div>
+            <div className={styles.footerLine}>{SITE.urgentHours}</div>
           </div>
         </div>
 
