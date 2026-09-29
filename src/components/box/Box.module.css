@@ -203,8 +203,9 @@
     width: calc(100vw - 32px);
   }
 
+  /* Gouttière de 56 px à droite pour le faisceau de câbles */
   .box {
-    width: 100%;
+    width: calc(100% - 56px);
     padding: 14px;
   }
 
@@ -213,7 +214,10 @@
   }
 
   .gland {
-    display: none;
+    right: -25px;
+    width: 12px;
+    height: 16px;
+    border-width: 2px;
   }
 
   .serviceGrid {

@@ -252,10 +252,17 @@
     grid-template-columns: 1fr;
   }
 
-  /* Sur petit écran, la plaque passe au-dessus de l'article */
+  /* Sur petit écran, la plaque passe au-dessus de l'article
+     (relative et non static : les vis restent accrochées à la plaque) */
   .plate {
-    position: static;
+    position: relative;
+    top: auto;
     order: -1;
+  }
+
+  .plateSpecs {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
   }
 
   .media {

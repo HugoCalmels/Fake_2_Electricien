@@ -82,14 +82,18 @@ export default function WireNetwork({
   const clipId = `wire-clip-${useId().replace(/:/g, "")}`;
 
   useEffect(() => {
-    const GAP = 18;
-    const RIGHT_INSET = 14;
-    const BEND = 16;
     const OFF = 60; // marge hors écran : les bouts invisibles ne traînent pas sur les bords
 
     const measureAndDraw = () => {
       const vpW = window.innerWidth;
       const vpH = window.innerHeight;
+
+      // Sur mobile, le faisceau tient dans une gouttière étroite à droite
+      const mobile = vpW <= 720;
+      const GAP = mobile ? 8 : 18;
+      const RIGHT_INSET = mobile ? 6 : 14;
+      const BEND = mobile ? 9 : 16;
+      const SHINE = mobile ? 1 : 1.6;
 
       clipRectRef.current?.setAttribute("width", String(vpW));
       clipRectRef.current?.setAttribute("height", String(vpH));
@@ -123,7 +127,7 @@ export default function WireNetwork({
 
         cable.outline?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND));
         cable.sheath?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND));
-        cable.shine?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND, -1.6, -1.6));
+        cable.shine?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND, -SHINE, -SHINE));
 
         runs[i] = { top: y1 + BEND, bottom: y2 - BEND };
       }
@@ -137,7 +141,8 @@ export default function WireNetwork({
         const active = runs
           .map((r, i) => (r && y > r.top + 10 && y < r.bottom - 10 ? i : -1))
           .filter((i) => i >= 0);
-        if (y > vpH + 20 || active.length === 0) {
+        // Un collier sert à tenir un faisceau : au moins deux câbles
+        if (y > vpH + 20 || active.length < 2) {
           g.style.display = "none";
           continue;
         }

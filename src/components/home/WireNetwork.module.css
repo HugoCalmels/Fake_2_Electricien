@@ -96,8 +96,11 @@
   .sheath { stroke-width: 5px; }
 }
 
+/* Mobile : câbles fins dans la gouttière de droite */
 @media (max-width: 720px) {
-  .svg {
-    display: none;
-  }
+  .outline { stroke-width: 6px; }
+  .sheath { stroke-width: 3.5px; }
+  .shine { stroke-width: 1px; }
+
+  .clamp rect { stroke-width: 2px; }
 }
