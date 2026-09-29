@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import boxStyles from "@/components/box/Box.module.css";
 import articleStyles from "@/components/box/Article.module.css";
-import SectionBox from "@/components/box/SectionBox";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -41,8 +40,15 @@ export default function MentionsLegalesPage() {
         </ol>
       </nav>
 
-      <SectionBox id="mentions-legales" label="Mentions légales" colorIndex={4} wired={false} headingLevel={1} last>
-        <div className={articleStyles.article}>
+      <div className={`${boxStyles.page} ${boxStyles.t4}`}>
+        <header className={boxStyles.plainHead}>
+          <h1 className={`${boxStyles.sectionTitle} ${boxStyles.t4}`}>
+            <span className={boxStyles.sectionLed} aria-hidden="true" />
+            Mentions légales
+          </h1>
+        </header>
+
+        <div className={`${articleStyles.article} ${boxStyles.accent}`}>
           {SECTIONS.map((section, i) => (
             <div key={section.title}>
               <h2 style={i === 0 ? { marginTop: 0 } : undefined}>{section.title}</h2>
@@ -50,7 +56,7 @@ export default function MentionsLegalesPage() {
             </div>
           ))}
         </div>
-      </SectionBox>
+      </div>
     </>
   );
 }

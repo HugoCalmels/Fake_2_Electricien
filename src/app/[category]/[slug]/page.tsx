@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import boxStyles from "@/components/box/Box.module.css";
-import SectionBox from "@/components/box/SectionBox";
 import ServiceArticle from "@/components/box/ServiceArticle";
 import { CATEGORIES, SITE, findCategory } from "@/content/site";
 
@@ -49,18 +48,18 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         </ol>
       </nav>
 
-      {/* La prestation, dans un boîtier de la couleur de sa section */}
-      <SectionBox
-        id={service.slug}
-        label={service.title}
-        colorIndex={CATEGORIES.indexOf(cat)}
-        tagline={service.desc}
-        wired={false}
-        headingLevel={1}
-        last
-      >
+      {/* Page de lecture : titre simple, sans boîtier (pas de câble ici) */}
+      <div className={`${boxStyles.page} ${boxStyles[`t${CATEGORIES.indexOf(cat) % 5}`]}`}>
+        <header className={boxStyles.plainHead}>
+          <h1 className={`${boxStyles.sectionTitle} ${boxStyles[`t${CATEGORIES.indexOf(cat) % 5}`]}`}>
+            <span className={boxStyles.sectionLed} aria-hidden="true" />
+            {service.title}
+          </h1>
+          <p className={boxStyles.tagline}>{service.desc}</p>
+        </header>
+
         <ServiceArticle category={cat} service={service} />
-      </SectionBox>
+      </div>
     </>
   );
 }

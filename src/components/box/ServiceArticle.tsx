@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./Article.module.css";
+import boxStyles from "./Box.module.css";
 import { SITE, type Category, type Service } from "@/content/site";
 
 /**
@@ -26,7 +27,7 @@ export default function ServiceArticle({ category, service }: { category: Catego
 
   return (
     <div className={styles.layout}>
-      <article className={styles.article}>
+      <article className={`${styles.article} ${boxStyles.accent}`}>
         <div className={styles.media}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={service.image} alt={service.title} />

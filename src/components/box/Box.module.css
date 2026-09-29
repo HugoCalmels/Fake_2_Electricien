@@ -331,3 +331,40 @@ a.serviceCard:hover .cardMore {
     width: calc(100vw - 32px);
   }
 }
+
+/* ===== En-tête simple des pages de lecture (prestation, mentions légales) ===== */
+.page {
+  width: min(1400px, calc(100vw - 96px));
+  margin: 0 auto;
+  padding-bottom: 120px;
+}
+
+.plainHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  margin-bottom: 28px;
+}
+
+.plainHead .tagline {
+  flex: 1;
+}
+
+/* Liseré de la couleur de la section, en haut du contenu
+   (sélecteur doublé : doit l'emporter sur le contour du bloc, défini dans un autre module) */
+.accent.accent {
+  border-top: 8px solid var(--c);
+}
+
+@media (max-width: 960px) {
+  .page {
+    width: calc(100vw - 48px);
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    width: calc(100vw - 32px);
+  }
+}
