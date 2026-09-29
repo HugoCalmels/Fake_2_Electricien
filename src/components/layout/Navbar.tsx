@@ -158,11 +158,11 @@ export default function Navbar() {
 
   const handleAnchorClick =
     (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-      e.preventDefault();
-
       const id = href.replace("#", "");
       const el = document.getElementById(id);
+      // Hors de la home, la section n'existe pas : on laisse le lien ramener sur /#section
       if (!el) return;
+      e.preventDefault();
 
       const rect = el.getBoundingClientRect();
       const targetY = window.scrollY + rect.top - SCROLL_OFFSET;
@@ -233,7 +233,7 @@ export default function Navbar() {
               return (
                 <li key={it.href} className={styles.navItem}>
                   <a
-                    href={it.href}
+                    href={`/${it.href}`}
                     onClick={handleAnchorClick(it.href)}
                     className={active ? styles.linkActive : styles.link}
                     aria-current={active ? "page" : undefined}

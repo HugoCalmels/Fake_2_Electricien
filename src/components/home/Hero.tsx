@@ -1,5 +1,6 @@
+import Link from "next/link";
 import styles from "./Hero.module.css";
-import { SECTIONS, SITE } from "@/content/site";
+import { SITE } from "@/content/site";
 import Logo from "@/components/layout/Logo";
 
 // Voltmètre à aiguille : fait comprendre au premier coup d'œil que le tableau est la source de courant
@@ -80,50 +81,53 @@ const FACTS = [
   "Devis gratuit",
 ];
 
-export default function Hero() {
+export type Breaker = { id: string; label: string };
+
+/**
+ * Le coffret électrique d'en-tête : notice à gauche, voltmètre et disjoncteurs à
+ * droite. Chaque disjoncteur i alimente, via son câble, l'élément `#id` de la page.
+ * Utilisé par la home (un disjoncteur par section) et par les pages de section
+ * (un disjoncteur par prestation).
+ */
+export default function Hero({
+  title = SITE.brand,
+  dymo = `Électricien à ${SITE.city}`,
+  lead = "Installations, rénovation et dépannage électrique pour particuliers et professionnels. Travaux aux normes NF C 15-100.",
+  breakers,
+  navLabel = "Sections du site",
+  compact = false,
+}: {
+  title?: string;
+  dymo?: string;
+  lead?: string;
+  breakers: Breaker[];
+  navLabel?: string;
+  compact?: boolean;
+}) {
   return (
-    <section className={styles.hero} aria-label="Accueil">
+    <section className={`${styles.hero} ${compact ? styles.heroCompact : ""}`} aria-label={title}>
       <div className={styles.frame} data-wire-frame="main">
         <div className={styles.panel}>
           {/* Rivets aux quatre coins du coffret */}
-          <span
-            className={`${styles.rivet} ${styles.rivetTl}`}
-            aria-hidden="true"
-          />
-          <span
-            className={`${styles.rivet} ${styles.rivetTr}`}
-            aria-hidden="true"
-          />
-          <span
-            className={`${styles.rivet} ${styles.rivetBl}`}
-            aria-hidden="true"
-          />
-          <span
-            className={`${styles.rivet} ${styles.rivetBr}`}
-            aria-hidden="true"
-          />
+          <span className={`${styles.rivet} ${styles.rivetTl}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetTr}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetBl}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetBr}`} aria-hidden="true" />
 
           <div className={styles.panelBody}>
             <div className={styles.intro}>
               <div className={styles.introText}>
-                <h1 className={styles.title}>{SITE.brand}</h1>
-                <p className={styles.dymo}>Électricien à {SITE.city}</p>
-                <p className={styles.lead}>
-                  Installations, rénovation et dépannage électrique pour
-                  particuliers et professionnels. Travaux aux normes NF C
-                  15-100.
-                </p>
+                <h1 className={styles.title}>{title}</h1>
+                <p className={styles.dymo}>{dymo}</p>
+                <p className={styles.lead}>{lead}</p>
 
                 <div className={styles.ctas}>
-                  <a
-                    className={styles.ctaPrimary}
-                    href={`tel:${SITE.phoneTel}`}
-                  >
+                  <a className={styles.ctaPrimary} href={`tel:${SITE.phoneTel}`}>
                     Appeler le {SITE.phoneDisplay}
                   </a>
-                  <a className={styles.ctaSecondary} href="#contact">
+                  <Link className={styles.ctaSecondary} href="/#contact">
                     Demander un devis
-                  </a>
+                  </Link>
                 </div>
 
                 <ul className={styles.facts}>
@@ -139,28 +143,24 @@ export default function Hero() {
               <Logo className={styles.emblem} />
             </div>
 
-            {/* Le tableau : un disjoncteur par section, chacun alimente la sienne */}
+            {/* Le tableau : un disjoncteur par élément alimenté */}
             <div className={styles.board}>
               <Voltmeter />
 
-              <nav className={styles.breakers} aria-label="Sections du site">
-                {SECTIONS.map((s, i) => (
+              <nav className={styles.breakers} aria-label={navLabel}>
+                {breakers.map((b, i) => (
                   <a
-                    key={s.id}
-                    href={`#${s.id}`}
-                    className={`${styles.breaker} ${styles[`b${i}`]}`}
+                    key={b.id}
+                    href={`#${b.id}`}
+                    className={`${styles.breaker} ${styles[`b${i % 5}`]}`}
                     data-breaker={i}
                   >
                     <span className={styles.switch} aria-hidden="true">
                       <span className={styles.lever} />
                     </span>
-                    <span className={styles.breakerLabel}>{s.label}</span>
-                    {/* Presse-étoupe : le câble de la section sort du tableau ici */}
-                    <span
-                      data-wire-anchor={`hero-pin-${i}`}
-                      className={styles.gland}
-                      aria-hidden="true"
-                    />
+                    <span className={styles.breakerLabel}>{b.label}</span>
+                    {/* Presse-étoupe : le câble sort du tableau ici */}
+                    <span data-wire-anchor={`hero-pin-${i}`} className={styles.gland} aria-hidden="true" />
                   </a>
                 ))}
               </nav>

@@ -74,7 +74,10 @@
 :global(body:has([data-breaker="1"]:hover)) .g1 .sheath,
 :global(body:has([data-breaker="2"]:hover)) .g2 .sheath,
 :global(body:has([data-breaker="3"]:hover)) .g3 .sheath,
-:global(body:has([data-breaker="4"]:hover)) .g4 .sheath {
+:global(body:has([data-breaker="4"]:hover)) .g4 .sheath,
+:global(body:has([data-breaker="5"]:hover)) .g5 .sheath,
+:global(body:has([data-breaker="6"]:hover)) .g6 .sheath,
+:global(body:has([data-breaker="7"]:hover)) .g7 .sheath {
   filter: brightness(1.25) drop-shadow(0 0 5px currentColor);
 }
 
@@ -83,6 +86,10 @@
 :global(body:has([data-breaker="2"]:hover)) .g2 .sheath { color: var(--cable-2); }
 :global(body:has([data-breaker="3"]:hover)) .g3 .sheath { color: var(--cable-3); }
 :global(body:has([data-breaker="4"]:hover)) .g4 .sheath { color: var(--cable-4); }
+:global(body:has([data-breaker="5"]:hover)) .g5 .sheath { color: var(--cable-0); }
+:global(body:has([data-breaker="6"]:hover)) .g6 .sheath { color: var(--cable-1); }
+:global(body:has([data-breaker="7"]:hover)) .g7 .sheath { color: var(--cable-2); }
+
 
 @media (max-width: 960px) {
   .outline { stroke-width: 9px; }

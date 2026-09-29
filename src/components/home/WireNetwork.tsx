@@ -58,7 +58,7 @@ function Cable({
   return (
     <>
       <path ref={(el) => store(el, "outline")} className={styles.outline} />
-      <path ref={(el) => store(el, "sheath")} className={`${styles.sheath} ${styles[`c${wireIndex}`]}`} />
+      <path ref={(el) => store(el, "sheath")} className={`${styles.sheath} ${styles[`c${wireIndex % 5}`]}`} />
       <path ref={(el) => store(el, "shine")} className={styles.shine} />
     </>
   );
