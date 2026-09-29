@@ -45,35 +45,11 @@ function Voltmeter() {
   );
 }
 
-// Écran de terminal à phosphore vert, façon vieux terminal industriel
-const TERMINAL_LINES = [
-  ["Expérience", "4 ans"],
-  ["Urgences", "7j/7"],
-  ["Zone", "Toulouse +30 km"],
-  ["Devis", "Gratuit"],
+const FACTS = [
+  ["4 ans", "d’expérience"],
+  ["7j/7", "selon urgence"],
+  ["Toulouse", "et alentours"],
 ];
-
-function Terminal() {
-  return (
-    <div className={styles.terminal}>
-      <div className={styles.screen}>
-        <p className={styles.termHead}>FAKEELEC INDUSTRIES (TM) TERMLINK</p>
-        <ul className={styles.termList}>
-          {TERMINAL_LINES.map(([k, v]) => (
-            <li key={k}>
-              <span>&gt; {k}</span>
-              <span className={styles.termDots} aria-hidden="true" />
-              <span>{v}</span>
-            </li>
-          ))}
-        </ul>
-        <p className={styles.termStatus}>
-          &gt; Statut : en service<span className={styles.cursor} aria-hidden="true" />
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export default function Hero() {
   return (
@@ -104,7 +80,14 @@ export default function Hero() {
                 </a>
               </div>
 
-              <Terminal />
+              <ul className={styles.facts}>
+                {FACTS.map(([value, label]) => (
+                  <li key={value} className={styles.fact}>
+                    <strong>{value}</strong>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Le tableau : un disjoncteur par section, chacun alimente la sienne */}
