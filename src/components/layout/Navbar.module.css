@@ -126,16 +126,15 @@
   padding: 6px 0;
 }
 
-/* Soulignement épais façon petit câble : gaine de la couleur de la section, contour noir */
+/* Soulignement franc, de la couleur du câble de la section */
 .link::after,
 .linkActive::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -8px;
-  height: 7px;
-  border: 2px solid var(--ink);
+  bottom: -5px;
+  height: 4px;
   border-radius: 2px;
   background: var(--c, var(--ink));
   opacity: 0;
