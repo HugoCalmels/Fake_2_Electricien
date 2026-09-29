@@ -122,15 +122,29 @@
   line-height: 1;
   color: var(--nav-text);
   text-decoration: none;
-  text-underline-offset: 0.3em;
-  text-decoration-thickness: 4px;
+  position: relative;
   padding: 6px 0;
 }
 
-.link:hover,
-.linkActive {
-  text-decoration: underline;
-  text-decoration-color: var(--c, var(--ink));
+/* Soulignement épais façon petit câble : gaine de la couleur de la section, contour noir */
+.link::after,
+.linkActive::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 7px;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: var(--c, var(--ink));
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.link:hover::after,
+.linkActive::after {
+  opacity: 1;
 }
 
 .phone,
