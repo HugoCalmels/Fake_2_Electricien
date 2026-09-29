@@ -12,18 +12,6 @@
   padding: 116px 0 100px;
 }
 
-/* Pages de section : le coffret n'a pas besoin de remplir tout l'écran */
-.heroCompact {
-  min-height: auto;
-  padding-bottom: 96px;
-}
-
-/* Les noms de section sont plus longs que « FakeElec » */
-.heroCompact .title {
-  font-size: clamp(38px, 3.8vw, 58px);
-  overflow-wrap: anywhere;
-}
-
 /* ===== Le coffret électrique (métal peint, rivets, bande de danger) ===== */
 .panel {
   position: relative;

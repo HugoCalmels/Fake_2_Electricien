@@ -62,7 +62,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         wired={false}
         headingLevel={1}
       >
-        <ServiceDetail service={service} eagerImage />
+        <ServiceDetail service={service} />
       </SectionBox>
 
       {others.length ? (

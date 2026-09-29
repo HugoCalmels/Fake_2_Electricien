@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import styles from "@/components/home/Home.module.css";
-import WireNetwork from "@/components/home/WireNetwork";
-import Hero from "@/components/home/Hero";
+import boxStyles from "@/components/box/Box.module.css";
 import SectionBox from "@/components/box/SectionBox";
-import ServiceDetail from "@/components/box/ServiceDetail";
+import ServiceGrid from "@/components/box/ServiceGrid";
 import { CATEGORIES, SITE, findCategory } from "@/content/site";
 
 type Params = { category: string };
@@ -25,41 +24,33 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
+// Page hub, volontairement sobre : la liste des prestations de la section
 export default async function CategoryPage({ params }: { params: Promise<Params> }) {
   const cat = findCategory((await params).category);
   if (!cat) notFound();
 
-  // Même principe que la home : le disjoncteur i alimente la prestation i
-  const targets = cat.services.flatMap((s, i) => [
-    { key: `hero-pin-${i}`, wireIndex: i, trunkStart: true, affectsStop: false },
-    { key: s.slug, wireIndex: i, affectsStop: true },
-  ]);
-
   return (
-    <div className={styles.page}>
-      <WireNetwork frameSelector='[data-wire-frame="main"]' wiresCount={cat.services.length} targets={targets} />
+    <>
+      <nav className={boxStyles.breadcrumb} aria-label="Fil d’Ariane">
+        <ol>
+          <li>
+            <Link href="/">Accueil</Link>
+          </li>
+          <li aria-current="page">{cat.label}</li>
+        </ol>
+      </nav>
 
-      <Hero
-        title={cat.label}
-        dymo={`${SITE.brand} · ${SITE.city}`}
-        lead={cat.tagline}
-        breakers={cat.services.map((s) => ({ id: s.slug, label: s.title }))}
-        navLabel={`Prestations ${cat.label}`}
-        compact
-      />
-
-      {cat.services.map((service, i) => (
-        <SectionBox
-          key={service.slug}
-          id={service.slug}
-          label={service.title}
-          colorIndex={i}
-          tagline={service.desc}
-          last={i === cat.services.length - 1}
-        >
-          <ServiceDetail service={service} href={`/${cat.id}/${service.slug}`} />
-        </SectionBox>
-      ))}
-    </div>
+      <SectionBox
+        id={cat.id}
+        label={cat.label}
+        colorIndex={CATEGORIES.indexOf(cat)}
+        tagline={cat.tagline}
+        wired={false}
+        headingLevel={1}
+        last
+      >
+        <ServiceGrid categoryId={cat.id} items={cat.services} />
+      </SectionBox>
+    </>
   );
 }

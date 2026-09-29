@@ -86,8 +86,7 @@ export type Breaker = { id: string; label: string };
 /**
  * Le coffret électrique d'en-tête : notice à gauche, voltmètre et disjoncteurs à
  * droite. Chaque disjoncteur i alimente, via son câble, l'élément `#id` de la page.
- * Utilisé par la home (un disjoncteur par section) et par les pages de section
- * (un disjoncteur par prestation).
+ * Sur la home : un disjoncteur par section.
  */
 export default function Hero({
   title = SITE.brand,
@@ -95,17 +94,15 @@ export default function Hero({
   lead = "Installations, rénovation et dépannage électrique pour particuliers et professionnels. Travaux aux normes NF C 15-100.",
   breakers,
   navLabel = "Sections du site",
-  compact = false,
 }: {
   title?: string;
   dymo?: string;
   lead?: string;
   breakers: Breaker[];
   navLabel?: string;
-  compact?: boolean;
 }) {
   return (
-    <section className={`${styles.hero} ${compact ? styles.heroCompact : ""}`} aria-label={title}>
+    <section className={styles.hero} aria-label={title}>
       <div className={styles.frame} data-wire-frame="main">
         <div className={styles.panel}>
           {/* Rivets aux quatre coins du coffret */}
