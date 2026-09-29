@@ -239,10 +239,9 @@
 .contactCard,
 .form,
 .mapCard {
+  border-width: 2px;
   border-color: var(--ink);
-  border-radius: var(--radius);
   background: var(--paper-light);
-  box-shadow: var(--shadow);
 }
 
 .cardTitle {
@@ -267,7 +266,8 @@
 
 .input,
 .textarea {
-  border-radius: 8px;
+  border-width: 2px;
+  border-radius: 3px;
   font-size: 15px;
   background: #fff;
 }
@@ -289,13 +289,12 @@
 .submit {
   height: 46px;
   padding: 0 22px;
-  border: 3px solid var(--ink);
-  border-radius: 10px;
+  border: 2px solid var(--brick);
+  border-radius: 4px;
   background: var(--brick);
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  box-shadow: var(--shadow-sm);
 }
 
 .submitIdle {
@@ -305,15 +304,14 @@
 .success {
   margin: 0;
   padding: 10px 14px;
-  border: 3px solid var(--ink);
-  border-radius: 8px;
+  border: 2px solid var(--ink);
   background: #e6f0dc;
   font-size: 14px;
 }
 
 .map {
+  border-width: 2px;
   border-color: var(--ink);
-  border-radius: 6px;
 }
 
 .map iframe {

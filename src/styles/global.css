@@ -22,13 +22,19 @@ body {
   background-size: 14px 14px;
 }
 
+/* La police d'affiche (Bowlby One) est réservée au nom de l'entreprise */
 h1,
 h2,
 h3 {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+h1 {
   font-family: var(--font-title), system-ui, sans-serif;
   font-weight: 400;
   letter-spacing: 0.01em;
-  margin: 0;
 }
 
 a {

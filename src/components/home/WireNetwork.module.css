@@ -19,16 +19,16 @@
 
 .outline {
   stroke: var(--ink);
-  stroke-width: 12px;
+  stroke-width: 10px;
 }
 
 .sheath {
-  stroke-width: 7px;
+  stroke-width: 6px;
 }
 
 .shine {
-  stroke: rgba(255, 255, 255, 0.55);
-  stroke-width: 1.6px;
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 1.4px;
 }
 
 .c0 { stroke: var(--cable-0); }

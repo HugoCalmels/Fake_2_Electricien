@@ -31,8 +31,8 @@ function Voltmeter() {
       <line
         x1="100"
         y1="84"
-        x2={100 + Math.cos(needle) * 46}
-        y2={84 - Math.sin(needle) * 46}
+        x2={100 + Math.cos(needle) * 40}
+        y2={84 - Math.sin(needle) * 40}
         className={styles.vmNeedle}
       />
       <circle cx="100" cy="84" r="6" className={styles.vmPivot} />
@@ -49,25 +49,13 @@ export default function Hero() {
     <section className={styles.hero} aria-label="Accueil">
       <div className={styles.frame} data-wire-frame="main">
         <div className={styles.panel}>
-          {/* Plaque du tableau, avec ses rivets */}
-          <div className={styles.plate}>
-            <span className={styles.rivet} aria-hidden="true" />
-            <span className={styles.plateText}>Tableau général · {SITE.brand}</span>
-            <span className={styles.plateTag}>Toulouse</span>
-            <span className={styles.rivet} aria-hidden="true" />
-          </div>
-
           <div className={styles.panelBody}>
             <div className={styles.intro}>
-              <p className={styles.kicker}>Électricien à {SITE.city}</p>
-              <h1 className={styles.title}>
-                Le courant passe,
-                <br />
-                chez vous aussi.
-              </h1>
+              <h1 className={styles.title}>{SITE.brand}</h1>
+              <p className={styles.subTitle}>Électricien à {SITE.city}</p>
               <p className={styles.lead}>
-                Installation, rénovation et dépannage électrique pour les particuliers et les pros.
-                Un travail propre, aux normes, avec un devis clair avant de commencer.
+                Installations, rénovation et dépannage électrique pour particuliers et professionnels.
+                Devis gratuit, travaux aux normes NF C 15-100.
               </p>
 
               <div className={styles.ctas}>
@@ -81,16 +69,16 @@ export default function Hero() {
 
               <ul className={styles.facts}>
                 <li className={styles.fact}>
-                  <strong>Devis gratuit</strong>
-                  <span>réponse sous 48 h</span>
+                  <strong>4 ans</strong>
+                  <span>d’expérience</span>
                 </li>
                 <li className={styles.fact}>
                   <strong>7j/7</strong>
-                  <span>pour les urgences</span>
+                  <span>selon urgence</span>
                 </li>
                 <li className={styles.fact}>
-                  <strong>Garantie décennale</strong>
-                  <span>sur tous les travaux</span>
+                  <strong>Toulouse</strong>
+                  <span>et alentours</span>
                 </li>
               </ul>
             </div>
@@ -106,7 +94,6 @@ export default function Hero() {
                       <span className={styles.lever} />
                     </span>
                     <span className={styles.breakerLabel}>
-                      <span className={styles.breakerNum}>{String(i + 1).padStart(2, "0")}</span>
                       {s.label}
                     </span>
                     {/* Presse-étoupe : le câble de la section sort du tableau ici */}

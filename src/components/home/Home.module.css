@@ -34,13 +34,13 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 18px 12px 12px;
-  border: 3px solid var(--ink);
-  border-radius: 10px;
+  padding: 14px 18px;
+  border: 2px solid var(--ink);
   background: var(--paper-light);
-  box-shadow: var(--shadow-sm);
-  font-size: 20px;
-  letter-spacing: 0.06em;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -50,19 +50,13 @@
 .t3 { --c: var(--cable-3); }
 .t4 { --c: var(--cable-4); }
 
-.sectionNum {
-  display: inline-grid;
-  place-items: center;
-  width: 38px;
-  height: 28px;
-  border: 2.5px solid var(--ink);
-  border-radius: 6px;
+/* Petit voyant de la couleur du câble qui alimente la section */
+.sectionLed {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
   background: var(--c);
-  color: #fff;
-  font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0;
 }
 
 .sectionBody {
@@ -81,7 +75,7 @@
 .serviceGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  gap: 18px;
   /* Laisse la place aux câbles qui descendent à droite */
   margin-right: 130px;
 }
@@ -90,18 +84,15 @@
   display: flex;
   flex-direction: column;
   padding: 12px 12px 16px;
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
+  border: 2px solid var(--ink);
   background: var(--paper-light);
-  box-shadow: var(--shadow);
 }
 
 .serviceMedia {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  margin-bottom: 14px;
-  border: 3px solid var(--ink);
-  border-radius: 6px;
+  margin-bottom: 12px;
+  border: 2px solid var(--ink);
   background: var(--paper-dark);
 }
 
@@ -117,7 +108,7 @@
 .serviceTitle {
   margin: 0 0 6px;
   font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0;

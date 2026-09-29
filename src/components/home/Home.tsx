@@ -31,7 +31,7 @@ function ServiceGrid({ items }: { items: Service[] }) {
 function SectionLabel({ id, label, index }: { id: string; label: string; index: number }) {
   return (
     <h2 data-wire-anchor={id} className={`${styles.sectionTitle} ${styles[`t${index}`]}`}>
-      <span className={styles.sectionNum}>{String(index + 1).padStart(2, "0")}</span>
+      <span className={styles.sectionLed} aria-hidden="true" />
       {label}
     </h2>
   );

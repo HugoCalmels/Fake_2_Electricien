@@ -13,7 +13,7 @@
 
   min-height: var(--nav-h);
   background: var(--paper-light);
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
   overflow: visible;
 }
 
@@ -51,11 +51,10 @@
 }
 
 .brandName {
-  font-family: var(--font-title), system-ui, sans-serif;
-  font-size: 1.3rem;
-  font-weight: 400;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.01em;
 }
 
 .brandCity {
@@ -74,8 +73,8 @@
   width: 42px;
   height: 42px;
   padding: 0;
-  border: 3px solid var(--ink);
-  border-radius: 8px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
   background: var(--paper-light);
   align-items: center;
   justify-content: center;
@@ -152,18 +151,16 @@
   white-space: nowrap;
 
   background: var(--brick);
-  border: 3px solid var(--ink);
-  border-radius: 10px;
-  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--brick);
+  border-radius: 4px;
 
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: background 0.15s ease;
 }
 
 .phone:hover,
 .phoneMobile:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--ink);
+  background: #b23c26;
 }
 
 .phoneMobile {
