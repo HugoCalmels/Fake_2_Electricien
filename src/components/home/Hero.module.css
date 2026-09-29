@@ -60,11 +60,12 @@
 }
 
 /* Grand logo en emblème, à droite de la notice */
+/* Aligné sur le haut du titre, à sa droite */
 .emblem {
-  width: clamp(140px, 12vw, 180px);
+  width: clamp(120px, 10vw, 150px);
   height: auto;
-  align-self: center;
-  justify-self: center;
+  align-self: start;
+  justify-self: end;
 }
 
 .introText {
