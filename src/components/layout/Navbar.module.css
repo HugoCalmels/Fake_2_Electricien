@@ -283,9 +283,7 @@
   }
 
   .link,
-  .linkActive,
-  .phoneMobile,
-  .phone {
+  .linkActive {
     font-size: 0.9rem;
   }
 }
