@@ -1,5 +1,6 @@
 import styles from "./Hero.module.css";
 import { SECTIONS, SITE } from "@/content/site";
+import Logo from "@/components/layout/Logo";
 
 // Voltmètre à aiguille : fait comprendre au premier coup d'œil que le tableau est la source de courant
 function Voltmeter() {
@@ -60,7 +61,10 @@ export default function Hero() {
 
           <div className={styles.panelBody}>
             <div className={styles.intro}>
-              <h1 className={styles.title}>{SITE.brand}</h1>
+              <div className={styles.brandRow}>
+                <Logo className={styles.brandLogo} />
+                <h1 className={styles.title}>{SITE.brand}</h1>
+              </div>
               <p className={styles.dymo}>Électricien à {SITE.city}</p>
               <p className={styles.lead}>
                 Installations, rénovation et dépannage électrique pour particuliers et professionnels.
