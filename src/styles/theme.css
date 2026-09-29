@@ -11,18 +11,19 @@
   --accent: #274060;
 
   /* Couleurs des câbles, une par section */
-  --cable-0: #c8452d; /* brique */
-  --cable-1: #2b6f86; /* pétrole */
-  --cable-2: #5a8f3c; /* vert */
-  --cable-3: #e2a728; /* moutarde */
-  --cable-4: #274060; /* marine */
+  /* Couleurs des vrais fils électriques : rouge, bleu, vert, jaune, marron */
+  --cable-0: #c8452d;
+  --cable-1: #3a7cc0;
+  --cable-2: #5a8f3c;
+  --cable-3: #e2a728;
+  --cable-4: #7a4a2b;
 
   --mustard: #e2a728;
   --brick: #c8452d;
   --steel: #d9d2bf;
   --steel-dark: #b8ae94;
-  /* Tôle peinte vert-de-gris du coffret électrique */
-  --metal: #9fae9a;
+  /* Bleu électricien : tôle du coffret et footer */
+  --metal: #2c4f78;
 
   --shadow: 5px 5px 0 var(--ink);
   --shadow-sm: 3px 3px 0 var(--ink);

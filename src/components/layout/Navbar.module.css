@@ -151,7 +151,7 @@
   white-space: nowrap;
 
   background: var(--brick);
-  border: 2px solid var(--brick);
+  border: 3px solid var(--ink);
   border-radius: 4px;
 
   cursor: pointer;

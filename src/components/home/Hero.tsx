@@ -45,11 +45,7 @@ function Voltmeter() {
   );
 }
 
-const FACTS = [
-  ["4 ans", "d’expérience"],
-  ["7j/7", "selon urgence"],
-  ["Toulouse", "et alentours"],
-];
+const FACTS = ["4 ans d’expérience", "Urgences 7j/7", "Toulouse et 30 km autour", "Devis gratuit"];
 
 export default function Hero() {
   return (
@@ -81,10 +77,9 @@ export default function Hero() {
               </div>
 
               <ul className={styles.facts}>
-                {FACTS.map(([value, label]) => (
-                  <li key={value} className={styles.fact}>
-                    <strong>{value}</strong>
-                    <span>{label}</span>
+                {FACTS.map((fact) => (
+                  <li key={fact} className={styles.fact}>
+                    {fact}
                   </li>
                 ))}
               </ul>
@@ -96,7 +91,7 @@ export default function Hero() {
 
               <nav className={styles.breakers} aria-label="Sections du site">
                 {SECTIONS.map((s, i) => (
-                  <a key={s.id} href={`#${s.id}`} className={`${styles.breaker} ${styles[`b${i}`]}`}>
+                  <a key={s.id} href={`#${s.id}`} className={`${styles.breaker} ${styles[`b${i}`]}`} data-breaker={i}>
                     <span className={styles.switch} aria-hidden="true">
                       <span className={styles.lever} />
                     </span>
@@ -112,7 +107,7 @@ export default function Hero() {
           {/* Bande de signalisation en bas du coffret */}
           <div className={styles.hazard}>
             <span className={styles.hazardSign}>
-              <span aria-hidden="true">⚡</span> Danger · Haute tension
+              Danger · Haute tension
             </span>
           </div>
         </div>

@@ -190,7 +190,7 @@ export default function WireNetwork({
 
       <g clipPath={`url(#${clipId})`}>
         {order.map((i) => (
-          <g key={`cable-${i}`}>
+          <g key={`cable-${i}`} className={styles[`g${i}`]}>
             <Cable wireIndex={i} store={store(i)} />
             {/* Fiche de raccordement, à l'arrivée sur la section */}
             <g

@@ -76,7 +76,6 @@
   line-height: 1.2;
   text-transform: uppercase;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
-  transform: rotate(-1deg);
 }
 
 .lead {
@@ -133,34 +132,26 @@
   box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.22);
 }
 
-/* ===== Infos clés ===== */
+/* ===== Infos clés, en liste fléchée ===== */
 .facts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  max-width: 620px;
+  grid-template-columns: repeat(2, max-content);
+  gap: 8px 32px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .fact {
-  padding: 12px 14px;
-  border: 3px solid var(--ink);
-  background: var(--paper);
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.fact strong {
-  display: block;
-  font-size: 17px;
-  line-height: 1.2;
-}
-
-.fact span {
-  display: block;
-  margin-top: 3px;
-  font-size: 13px;
-  color: var(--muted);
+.fact::before {
+  content: "→";
+  margin-right: 10px;
+  font-weight: 700;
+  color: var(--metal);
 }
 
 /* ===== Voltmètre + disjoncteurs ===== */
@@ -176,7 +167,7 @@
   height: auto;
 }
 
-.vmBody { fill: var(--cable-4); stroke: var(--ink); stroke-width: 3; }
+.vmBody { fill: var(--ink); stroke: var(--ink); stroke-width: 3; }
 .vmScrew { fill: var(--steel); stroke: var(--ink); stroke-width: 1.5; }
 .vmFace { fill: #fbf5e6; stroke: var(--ink); stroke-width: 2.5; }
 .vmTick { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
@@ -208,11 +199,18 @@
   box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12);
   text-decoration: none;
   color: var(--ink);
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.breaker:hover {
-  background: #fff;
+/* Survol : le disjoncteur prend la couleur de son câble (et le câble s'allume, cf. WireNetwork) */
+.breaker:hover,
+.breaker:focus-visible {
+  background: color-mix(in srgb, var(--c) 22%, #fff);
+}
+
+.breaker:hover .lever,
+.breaker:focus-visible .lever {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 45%, transparent);
 }
 
 .b0 { --c: var(--cable-0); }
@@ -254,14 +252,6 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-.breaker:nth-child(odd) .breakerLabel {
-  transform: rotate(-1deg);
-}
-
-.breaker:nth-child(even) .breakerLabel {
-  transform: rotate(0.8deg);
 }
 
 /* Presse-étoupe sur la paroi du coffret : point de sortie du câble */

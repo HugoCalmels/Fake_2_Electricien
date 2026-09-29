@@ -64,6 +64,26 @@
   stroke-width: 1.6px;
 }
 
+/* Survol d'un disjoncteur sur la landing : son câble s'allume */
+.outline,
+.sheath {
+  transition: stroke 0.15s ease, filter 0.15s ease;
+}
+
+:global(body:has([data-breaker="0"]:hover)) .g0 .sheath,
+:global(body:has([data-breaker="1"]:hover)) .g1 .sheath,
+:global(body:has([data-breaker="2"]:hover)) .g2 .sheath,
+:global(body:has([data-breaker="3"]:hover)) .g3 .sheath,
+:global(body:has([data-breaker="4"]:hover)) .g4 .sheath {
+  filter: brightness(1.25) drop-shadow(0 0 5px currentColor);
+}
+
+:global(body:has([data-breaker="0"]:hover)) .g0 .sheath { color: var(--cable-0); }
+:global(body:has([data-breaker="1"]:hover)) .g1 .sheath { color: var(--cable-1); }
+:global(body:has([data-breaker="2"]:hover)) .g2 .sheath { color: var(--cable-2); }
+:global(body:has([data-breaker="3"]:hover)) .g3 .sheath { color: var(--cable-3); }
+:global(body:has([data-breaker="4"]:hover)) .g4 .sheath { color: var(--cable-4); }
+
 @media (max-width: 960px) {
   .outline { stroke-width: 9px; }
   .sheath { stroke-width: 5px; }
