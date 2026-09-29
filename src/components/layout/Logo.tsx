@@ -3,7 +3,7 @@ export default function Logo({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 48 48" aria-hidden="true">
       {/* Plaque de prise */}
-      <rect x="3" y="3" width="42" height="42" rx="8" fill="#e2a728" stroke="#1d1a16" strokeWidth="2.5" />
+      <rect x="3" y="3" width="42" height="42" rx="8" fill="#2c4f78" stroke="#1d1a16" strokeWidth="2.5" />
       <circle cx="24" cy="24" r="15" fill="#fbf5e6" stroke="#1d1a16" strokeWidth="2.5" />
       {/* Éclair */}
       <path
