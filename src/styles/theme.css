@@ -1,44 +1,32 @@
-/*
- * Charte FakeElec — chaque couleur a un seul rôle.
- * Ne pas ajouter de couleur en dur ailleurs : tout passe par ces variables.
- */
+/* Direction artistique : cartoon rétro-industriel (papier crème, contours encrés, ombres plates) */
 :root {
-  /* ===== Couleurs ===== */
-  --paper: #f1e7d0; /* fond de page */
-  --surface: #fbf5e6; /* cards, notice, champs, étiquettes Dymo (texte) */
-  --ink: #1d1a16; /* textes, contours, étiquettes Dymo (ruban), footer */
-  --ink-soft: rgba(29, 26, 22, 0.68); /* texte secondaire = encre atténuée */
-  --action: #c8452d; /* uniquement les boutons d'appel et de devis */
-  --action-hover: #b23c26;
-  --metal: #9fae9a; /* uniquement le coffret électrique */
+  --paper: #f1e7d0;
+  --paper-light: #fbf5e6;
+  --paper-dark: #e3d6b8;
+  --ink: #1d1a16;
+  --muted: rgba(29, 26, 22, 0.68);
 
-  /* Câbles : uniquement les câbles et leurs rappels (manette, voyant) */
-  --cable-0: #b94a36;
-  --cable-1: #2b6f86;
-  --cable-2: #5a8f3c;
-  --cable-3: #d9a032;
-  --cable-4: #2f4a6e;
+  --bg: var(--paper-light);
+  --line: var(--ink);
+  --accent: #274060;
 
-  /* Écran du terminal (objet à part, ses propres couleurs) */
-  --screen: #0b1f11;
-  --screen-fg: #6dff9b;
+  /* Couleurs des câbles, une par section */
+  --cable-0: #c8452d; /* brique */
+  --cable-1: #2b6f86; /* pétrole */
+  --cable-2: #5a8f3c; /* vert */
+  --cable-3: #e2a728; /* moutarde */
+  --cable-4: #274060; /* marine */
 
-  /* ===== Formes ===== */
-  --bw: 3px; /* contour des blocs */
-  --bw-thin: 2px; /* contour des éléments internes */
-  --r: 3px; /* seul arrondi du site */
+  --mustard: #e2a728;
+  --brick: #c8452d;
+  --steel: #d9d2bf;
+  --steel-dark: #b8ae94;
+  /* Tôle peinte vert-de-gris du coffret électrique */
+  --metal: #9fae9a;
 
-  /* ===== Espacements (échelle unique) ===== */
-  --s1: 8px;
-  --s2: 16px;
-  --s3: 24px;
-  --s4: 32px;
-  --s5: 48px;
-  --s6: 96px;
+  --shadow: 5px 5px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --radius: 10px;
 
-  /* ===== Tailles de texte ===== */
-  --fs-sm: 14px;
-  --fs-md: 17px;
-  --fs-lg: 20px;
-  --fs-xl: clamp(52px, 6vw, 88px);
+  --max: 1600px;
 }

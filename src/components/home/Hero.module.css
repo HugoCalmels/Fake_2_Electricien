@@ -9,65 +9,89 @@
   min-height: 100vh;
   display: grid;
   align-items: center;
-  padding: calc(72px + var(--s6)) 0 var(--s6);
+  padding: 116px 0 100px;
 }
 
-/* ===== Le coffret électrique ===== */
+/* ===== Le coffret électrique (métal peint, rivets, bande de danger) ===== */
 .panel {
+  position: relative;
   /* Espace libre à droite : les câbles sortent du coffret et descendent là */
   width: calc(100% - 200px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: var(--s3);
-  padding: var(--s3);
-  border: var(--bw) solid var(--ink);
-  border-radius: var(--r);
+  padding: 22px;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
   background: var(--metal);
+  /* Reliefs du métal embouti, sans ombre portée */
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.18);
 }
 
-/* ===== Notice ===== */
+.rivet {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0 20%, var(--steel) 45%, var(--steel-dark) 100%);
+}
+
+.rivetTl { top: 7px; left: 7px; }
+.rivetTr { top: 7px; right: 7px; }
+.rivetBl { bottom: 7px; left: 7px; }
+.rivetBr { bottom: 7px; right: 7px; }
+
+.panelBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 22px;
+}
+
+/* ===== Notice imprimée collée sur le coffret ===== */
 .intro {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--s5);
-  border: var(--bw) solid var(--ink);
-  border-radius: var(--r);
-  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 3.2vw, 48px);
+  border: 3px solid var(--ink);
+  background: var(--paper-light);
 }
 
 .title {
-  margin: 0 0 var(--s2);
-  font-size: var(--fs-xl);
+  margin: 0 0 16px;
+  font-size: clamp(52px, 6vw, 88px);
   line-height: 0.95;
+  color: var(--ink);
 }
 
-/* Étiquette Dymo : ruban noir, lettres blanches */
+/* Étiquette Dymo : ruban noir, lettres blanches en relief */
 .dymo {
-  align-self: flex-start;
-  margin: 0 0 var(--s3);
-  padding: var(--s1) var(--s2);
+  display: inline-block;
+  margin: 0 0 22px;
+  padding: 7px 14px 6px;
   background: var(--ink);
-  color: var(--surface);
-  font-size: var(--fs-sm);
+  color: #f4efe2;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.16em;
   line-height: 1.2;
   text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: rotate(-1deg);
 }
 
 .lead {
   max-width: 600px;
-  margin: 0 0 var(--s4);
-  font-size: var(--fs-md);
+  margin: 0 0 26px;
+  font-size: 18px;
   line-height: 1.55;
+  color: var(--ink);
 }
 
 .ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s2);
+  gap: 12px;
+  margin-bottom: 26px;
 }
 
 .ctaPrimary,
@@ -75,64 +99,68 @@
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  padding: 0 var(--s3);
-  border: var(--bw) solid var(--ink);
-  border-radius: var(--r);
-  font-size: var(--fs-md);
+  padding: 0 20px;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
   font-weight: 700;
+  font-size: 16px;
   text-decoration: none;
+  /* Bouton poussoir : relief par l'intérieur, s'enfonce au clic */
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.22);
   transition: background 0.15s ease;
 }
 
 .ctaPrimary {
-  background: var(--action);
-  color: var(--surface);
+  background: var(--brick);
+  color: #fff;
 }
 
 .ctaPrimary:hover {
-  background: var(--action-hover);
+  background: #b23c26;
 }
 
 .ctaSecondary {
-  background: var(--surface);
+  background: var(--paper);
   color: var(--ink);
 }
 
 .ctaSecondary:hover {
-  background: var(--paper);
+  background: var(--paper-dark);
 }
 
-/* ===== Tableau : écran + disjoncteurs ===== */
-.board {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s2);
+.ctaPrimary:active,
+.ctaSecondary:active {
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.22);
 }
 
+/* ===== Terminal à phosphore vert ===== */
 .terminal {
-  padding: var(--s1);
-  border: var(--bw) solid var(--ink);
-  border-radius: var(--r);
-  background: var(--ink);
+  max-width: 520px;
+  padding: 10px;
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  background: #3b3d35;
 }
 
 .screen {
-  padding: var(--s2);
-  border-radius: 8px;
+  position: relative;
+  padding: 14px 18px;
+  border: 2px solid #111;
+  border-radius: 10px;
   background:
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 3px),
-    var(--screen);
-  color: var(--screen-fg);
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, #0f2a17 0%, #07140b 100%);
+  color: #6dff9b;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: var(--fs-lg);
+  font-size: 21px;
   line-height: 1.15;
-  text-shadow: 0 0 6px color-mix(in srgb, var(--screen-fg) 55%, transparent);
+  text-shadow: 0 0 6px rgba(109, 255, 155, 0.55);
   text-transform: uppercase;
 }
 
 .termHead {
-  margin: 0 0 var(--s1);
-  opacity: 0.75;
+  margin: 0 0 8px;
+  opacity: 0.8;
 }
 
 .termList {
@@ -144,52 +172,79 @@
 .termList li {
   display: flex;
   align-items: baseline;
-  gap: var(--s1);
+  gap: 8px;
 }
 
 .termDots {
   flex: 1;
-  border-bottom: 2px dotted color-mix(in srgb, var(--screen-fg) 45%, transparent);
+  border-bottom: 2px dotted rgba(109, 255, 155, 0.45);
   transform: translateY(-5px);
 }
 
 .termStatus {
-  margin: var(--s1) 0 0;
+  margin: 8px 0 0;
 }
 
 .cursor {
   display: inline-block;
-  width: 10px;
-  height: 17px;
-  margin-left: var(--s1);
+  width: 11px;
+  height: 18px;
+  margin-left: 6px;
   vertical-align: -2px;
-  background: var(--screen-fg);
+  background: #6dff9b;
+  box-shadow: 0 0 6px rgba(109, 255, 155, 0.6);
 }
+
+/* ===== Voltmètre + disjoncteurs ===== */
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.voltmeter {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vmBody { fill: var(--cable-4); stroke: var(--ink); stroke-width: 3; }
+.vmScrew { fill: var(--steel); stroke: var(--ink); stroke-width: 1.5; }
+.vmFace { fill: #fbf5e6; stroke: var(--ink); stroke-width: 2.5; }
+.vmTick { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.vmNum { font-family: var(--font-body), sans-serif; font-size: 10px; font-weight: 700; fill: var(--ink); }
+.vmUnit { font-family: var(--font-body), sans-serif; font-size: 10px; font-weight: 700; fill: var(--muted); letter-spacing: 0.14em; }
+.vmNeedle { stroke: var(--brick); stroke-width: 3; stroke-linecap: round; }
+.vmPivot { fill: var(--ink); }
+.vmBase { fill: var(--ink); }
+.vmBaseText { font-family: var(--font-mono), monospace; font-size: 14px; fill: var(--mustard); letter-spacing: 0.08em; }
 
 .breakers {
   display: flex;
   flex-direction: column;
-  gap: var(--s1);
+  gap: 8px;
 }
 
-/* Un module de disjoncteur */
+/* Un module de disjoncteur sur son rail */
 .breaker {
   --c: var(--cable-0);
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--s2);
-  min-height: 48px;
-  padding: 0 var(--s2) 0 var(--s1);
-  border: var(--bw) solid var(--ink);
-  border-radius: var(--r);
-  background: var(--surface);
-  color: var(--ink);
+  gap: 12px;
+  min-height: 50px;
+  padding: 6px 10px;
+  border: 3px solid var(--ink);
+  border-radius: 3px;
+  background: #f3efe6;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12);
   text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease;
 }
 
 .breaker:hover {
-  background: var(--paper);
+  background: #fff;
 }
 
 .b0 { --c: var(--cable-0); }
@@ -202,11 +257,11 @@
 .switch {
   position: relative;
   width: 24px;
-  height: 32px;
+  height: 34px;
   flex: none;
-  border: var(--bw-thin) solid var(--ink);
-  border-radius: var(--r);
-  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: #d8d3c5;
 }
 
 .lever {
@@ -214,44 +269,72 @@
   left: 50%;
   top: 3px;
   width: 12px;
-  height: 15px;
+  height: 16px;
   transform: translateX(-50%);
-  border: var(--bw-thin) solid var(--ink);
+  border: 2px solid var(--ink);
   border-radius: 2px;
   background: var(--c);
 }
 
+/* Étiquette Dymo collée sur le disjoncteur */
 .breakerLabel {
-  padding: 4px var(--s1);
+  padding: 4px 9px 3px;
   background: var(--ink);
-  color: var(--surface);
-  font-size: var(--fs-sm);
+  color: #f4efe2;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.breaker:nth-child(odd) .breakerLabel {
+  transform: rotate(-1deg);
+}
+
+.breaker:nth-child(even) .breakerLabel {
+  transform: rotate(0.8deg);
 }
 
 /* Presse-étoupe sur la paroi du coffret : point de sortie du câble */
 .gland {
   position: absolute;
   top: 50%;
-  /* padding du coffret + contours, pour se poser sur sa paroi extérieure */
-  right: calc(-1 * (var(--s3) + var(--bw) + 11px));
+  /* du bord du disjoncteur jusqu'à l'extérieur du coffret */
+  right: -38px;
   width: 16px;
   height: 22px;
   transform: translateY(-50%);
-  border: var(--bw) solid var(--ink);
-  border-radius: var(--r);
-  background: var(--metal);
+  border: 3px solid var(--ink);
+  border-radius: 3px;
+  background: var(--steel-dark);
+}
+
+/* ===== Bande de signalisation ===== */
+.hazard {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 22px -22px -22px;
+  padding: 8px 0;
+  border-top: 3px solid var(--ink);
+  background: repeating-linear-gradient(-45deg, var(--mustard) 0 16px, var(--ink) 16px 32px);
+}
+
+.hazardSign {
+  padding: 5px 14px;
+  border: 3px solid var(--ink);
+  background: var(--mustard);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1180px) {
-  .panel {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
-
-  .intro {
-    padding: var(--s4);
+  .panelBody {
+    grid-template-columns: minmax(0, 1fr) 270px;
   }
 }
 
@@ -262,12 +345,19 @@
 
   .hero {
     min-height: auto;
-    padding: calc(72px + var(--s4)) 0 var(--s5);
+    padding: 104px 0 72px;
   }
 
   .panel {
     width: calc(100% - 110px);
+  }
+
+  .panelBody {
     grid-template-columns: 1fr;
+  }
+
+  .voltmeter {
+    max-width: 280px;
   }
 }
 
@@ -278,21 +368,37 @@
 
   .panel {
     width: 100%;
-    padding: var(--s2);
-    gap: var(--s2);
+    padding: 14px;
+  }
+
+  .hazard {
+    margin: 14px -14px -14px;
   }
 
   .intro {
-    padding: var(--s3) var(--s2);
+    padding: 22px 18px;
   }
 
   .title {
     font-size: clamp(40px, 13vw, 56px);
   }
 
+  .dymo {
+    font-size: 13px;
+  }
+
+  .screen {
+    font-size: 18px;
+    padding: 12px;
+  }
+
   /* Sans câbles sur mobile, pas de presse-étoupe */
   .gland {
     display: none;
+  }
+
+  .lead {
+    font-size: 16px;
   }
 
   .ctaPrimary,
