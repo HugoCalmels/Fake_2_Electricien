@@ -21,6 +21,8 @@
   --brick: #c8452d;
   --steel: #d9d2bf;
   --steel-dark: #b8ae94;
+  /* Tôle peinte vert-de-gris du coffret électrique */
+  --metal: #9fae9a;
 
   --shadow: 5px 5px 0 var(--ink);
   --shadow-sm: 3px 3px 0 var(--ink);

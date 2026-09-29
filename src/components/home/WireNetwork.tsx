@@ -10,12 +10,15 @@ type Target = {
   trunkStart?: boolean;
 };
 
-// Un câble = 3 traits superposés : contour encre, gaine colorée, reflet
+// Un câble = 3 tracés superposés : contour encre, gaine colorée, reflet
 type CablePaths = {
   outline: SVGPathElement | null;
   sheath: SVGPathElement | null;
   shine: SVGPathElement | null;
 };
+
+const CLIP_COUNT = 14; // colliers pré-créés, repositionnés à chaque défilement
+const CLIP_EVERY = 170; // espacement des colliers, en pixels de page
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
@@ -25,11 +28,24 @@ function snap(v: number) {
   return Math.round(v * dpr) / dpr;
 }
 
-function setCable(c: CablePaths | undefined, d: string, shine: string) {
-  if (!c) return;
-  c.outline?.setAttribute("d", d);
-  c.sheath?.setAttribute("d", d);
-  c.shine?.setAttribute("d", shine);
+/**
+ * Tracé d'un câble : sort du tableau (xStart, y1), file à droite jusqu'à sa
+ * colonne x, descend jusqu'à y2, puis repart à gauche jusqu'à sa section (xEnd).
+ * Les deux coudes sont arrondis, comme un vrai câble qu'on plie.
+ */
+function cablePath(xStart: number, y1: number, x: number, y2: number, xEnd: number, bend: number, dx = 0, dy = 0) {
+  const r1 = Math.max(0, Math.min(bend, (y2 - y1) / 2, x - xStart));
+  const r2 = Math.max(0, Math.min(bend, (y2 - y1) / 2, x - xEnd));
+  const X = (v: number) => v + dx;
+  const Y = (v: number) => v + dy;
+  return [
+    `M ${X(xStart)} ${Y(y1)}`,
+    `L ${X(x - r1)} ${Y(y1)}`,
+    `Q ${X(x)} ${Y(y1)} ${X(x)} ${Y(y1 + r1)}`,
+    `L ${X(x)} ${Y(y2 - r2)}`,
+    `Q ${X(x)} ${Y(y2)} ${X(x - r2)} ${Y(y2)}`,
+    `L ${X(xEnd)} ${Y(y2)}`,
+  ].join(" ");
 }
 
 function Cable({
@@ -57,13 +73,10 @@ export default function WireNetwork({
   wiresCount?: number;
   frameSelector?: string;
 }) {
-  const svgRef = useRef<SVGSVGElement | null>(null);
   const clipRectRef = useRef<SVGRectElement | null>(null);
-
-  const trunkRefs = useRef<CablePaths[]>([]);
-  const branchRefs = useRef<Record<string, CablePaths>>({});
-  const terminalRefs = useRef<Record<string, SVGGElement | null>>({});
-
+  const cableRefs = useRef<CablePaths[]>([]);
+  const plugRefs = useRef<Array<SVGGElement | null>>([]);
+  const clampRefs = useRef<Array<SVGGElement | null>>([]);
   const rafRef = useRef<number>(0);
 
   // useId : identique côté serveur et client (Math.random cassait l'hydratation)
@@ -72,71 +85,71 @@ export default function WireNetwork({
   useEffect(() => {
     const GAP = 18;
     const RIGHT_INSET = 14;
-    const SHINE = 2; // décalage du reflet vers le haut / la gauche
+    const BEND = 16;
+    const OFF = 60; // marge hors écran : les bouts invisibles ne traînent pas sur les bords
 
     const measureAndDraw = () => {
       const vpW = window.innerWidth;
       const vpH = window.innerHeight;
 
-      if (clipRectRef.current) {
-        clipRectRef.current.setAttribute("width", String(vpW));
-        clipRectRef.current.setAttribute("height", String(vpH));
-      }
+      clipRectRef.current?.setAttribute("width", String(vpW));
+      clipRectRef.current?.setAttribute("height", String(vpH));
 
-      const frameEl = frameSelector
-        ? (document.querySelector(frameSelector) as HTMLElement | null)
-        : null;
-
-      const frameRect = frameEl?.getBoundingClientRect() ?? null;
-      const baseRight = frameRect ? frameRect.right : vpW;
+      const frameEl = frameSelector ? (document.querySelector(frameSelector) as HTMLElement | null) : null;
+      const baseRight = frameEl?.getBoundingClientRect().right ?? vpW;
       const x0 = baseRight - RIGHT_INSET;
       const xs = Array.from({ length: wiresCount }, (_, i) => snap(x0 - i * GAP));
 
-      const rects: Record<string, DOMRect> = {};
-      for (const t of targets) {
-        const el = document.querySelector(`[data-wire-anchor="${t.key}"]`) as HTMLElement | null;
-        if (!el) continue;
-        rects[t.key] = el.getBoundingClientRect();
-      }
+      const rect = (key: string) =>
+        (document.querySelector(`[data-wire-anchor="${key}"]`) as HTMLElement | null)?.getBoundingClientRect();
 
-      const startY = Array(wiresCount).fill(0);
-      for (const t of targets) {
-        if (!t.trunkStart) continue;
-        const r = rects[t.key];
-        if (!r) continue;
-        startY[t.wireIndex] = snap(clamp(r.top + r.height * 0.5, 0, vpH));
-      }
-
-      const stopY = Array(wiresCount).fill(Infinity);
-      for (const t of targets) {
-        if (t.affectsStop === false) continue;
-        const r = rects[t.key];
-        if (!r) continue;
-        const y = snap(clamp(r.top + r.height * 0.5, 0, vpH));
-        stopY[t.wireIndex] = Math.min(stopY[t.wireIndex], y);
-      }
+      const runs: Array<{ top: number; bottom: number } | null> = [];
 
       for (let i = 0; i < wiresCount; i += 1) {
-        const y1 = startY[i] ?? 0;
-        const y2 = Number.isFinite(stopY[i]) ? stopY[i] : vpH + 20;
-        const yTop = snap(Math.min(y1, y2));
-        const yBot = snap(Math.max(y1, y2));
-        const x = xs[i];
+        const from = targets.find((t) => t.wireIndex === i && t.trunkStart);
+        const to = targets.find((t) => t.wireIndex === i && t.affectsStop !== false);
+        const a = from && rect(from.key);
+        const b = to && rect(to.key);
+        const cable = cableRefs.current[i];
+        const plug = plugRefs.current[i];
+        if (!a || !b || !cable) {
+          runs[i] = null;
+          continue;
+        }
 
-        setCable(trunkRefs.current[i], `M ${x} ${yTop} L ${x} ${yBot}`, `M ${x - SHINE} ${yTop} L ${x - SHINE} ${yBot}`);
+        const y1 = snap(clamp(a.top + a.height / 2, -OFF, vpH + OFF));
+        const y2 = snap(clamp(b.top + b.height / 2, -OFF, vpH + OFF));
+        const x = xs[i];
+        const xStart = snap(a.right);
+        const xEnd = snap(b.right + 14); // laisse la place à la fiche de raccordement
+
+        cable.outline?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND));
+        cable.sheath?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND));
+        cable.shine?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND, -1.6, -1.6));
+        plug?.setAttribute("transform", `translate(${snap(b.right)} ${y2})`);
+
+        runs[i] = { top: y1 + BEND, bottom: y2 - BEND };
       }
 
-      for (const t of targets) {
-        const r = rects[t.key];
-        const terminal = terminalRefs.current[t.key];
-        if (!r || !terminal) continue;
-
-        const jy = snap(clamp(r.top + r.height * 0.5, 0, vpH));
-        const jx = xs[t.wireIndex];
-        const xTo = snap(r.right);
-
-        setCable(branchRefs.current[t.key], `M ${jx} ${jy} L ${xTo} ${jy}`, `M ${jx} ${jy - SHINE} L ${xTo} ${jy - SHINE}`);
-        terminal.setAttribute("transform", `translate(${jx} ${jy})`);
+      // Colliers vissés sur le faisceau vertical, fixes par rapport à la page
+      const offset = window.scrollY % CLIP_EVERY;
+      for (let k = 0; k < CLIP_COUNT; k += 1) {
+        const g = clampRefs.current[k];
+        if (!g) continue;
+        const y = snap(k * CLIP_EVERY - offset + CLIP_EVERY / 2);
+        const active = runs
+          .map((r, i) => (r && y > r.top + 10 && y < r.bottom - 10 ? i : -1))
+          .filter((i) => i >= 0);
+        if (y > vpH + 20 || active.length === 0) {
+          g.style.display = "none";
+          continue;
+        }
+        const left = xs[Math.max(...active)] - 9;
+        const right = xs[Math.min(...active)] + 9;
+        g.style.display = "";
+        g.setAttribute("transform", `translate(${left} ${y})`);
+        g.querySelector("rect")?.setAttribute("width", String(right - left));
+        g.querySelectorAll("circle")[1]?.setAttribute("cx", String(right - left - 5));
       }
     };
 
@@ -159,20 +172,16 @@ export default function WireNetwork({
     };
   }, [targets, wiresCount, frameSelector]);
 
-  const storeTrunk = (i: number) => (el: SVGPathElement | null, part: keyof CablePaths) => {
-    trunkRefs.current[i] ??= { outline: null, sheath: null, shine: null };
-    trunkRefs.current[i][part] = el;
-  };
-  const storeBranch = (key: string) => (el: SVGPathElement | null, part: keyof CablePaths) => {
-    branchRefs.current[key] ??= { outline: null, sheath: null, shine: null };
-    branchRefs.current[key][part] = el;
+  const store = (i: number) => (el: SVGPathElement | null, part: keyof CablePaths) => {
+    cableRefs.current[i] ??= { outline: null, sheath: null, shine: null };
+    cableRefs.current[i][part] = el;
   };
 
-  // Dessinés du dernier au premier câble : le câble 0 passe par-dessus les autres
+  // Dessinés du dernier au premier : le câble 0 passe par-dessus les autres
   const order = Array.from({ length: wiresCount }, (_, i) => wiresCount - 1 - i);
 
   return (
-    <svg ref={svgRef} className={styles.svg} width="100%" height="100%" aria-hidden="true">
+    <svg className={styles.svg} width="100%" height="100%" aria-hidden="true">
       <defs>
         <clipPath id={clipId}>
           <rect ref={clipRectRef} x="0" y="0" width="0" height="0" />
@@ -182,26 +191,34 @@ export default function WireNetwork({
       <g clipPath={`url(#${clipId})`}>
         {order.map((i) => (
           <g key={`cable-${i}`}>
-            <Cable wireIndex={i} store={storeTrunk(i)} />
+            <Cable wireIndex={i} store={store(i)} />
+            {/* Fiche de raccordement, à l'arrivée sur la section */}
+            <g
+              ref={(el) => {
+                plugRefs.current[i] = el;
+              }}
+              className={styles.plug}
+            >
+              <rect x="0" y="-9" width="16" height="18" />
+              <line x1="5" y1="-4" x2="5" y2="4" />
+              <line x1="10" y1="-4" x2="10" y2="4" />
+            </g>
+          </g>
+        ))}
 
-            {targets
-              .filter((t) => t.wireIndex === i)
-              .map((t) => (
-                <g key={`branch-${t.key}`}>
-                  <Cable wireIndex={i} store={storeBranch(t.key)} />
-                  {/* Borne de raccordement à la jonction */}
-                  <g
-                    ref={(el) => {
-                      terminalRefs.current[t.key] = el;
-                    }}
-                    className={styles.terminal}
-                  >
-                    <rect x="-9" y="-9" width="18" height="18" rx="4" />
-                    <circle cx="0" cy="0" r="3.2" />
-                    <line x1="-2" y1="-2" x2="2" y2="2" />
-                  </g>
-                </g>
-              ))}
+        {/* Colliers qui tiennent le faisceau contre le mur */}
+        {Array.from({ length: CLIP_COUNT }, (_, k) => (
+          <g
+            key={`clamp-${k}`}
+            ref={(el) => {
+              clampRefs.current[k] = el;
+            }}
+            className={styles.clamp}
+            style={{ display: "none" }}
+          >
+            <rect x="0" y="-6" width="0" height="12" />
+            <circle cx="5" cy="0" r="2.2" />
+            <circle cx="0" cy="0" r="2.2" />
           </g>
         ))}
       </g>

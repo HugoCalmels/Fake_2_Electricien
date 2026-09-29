@@ -34,14 +34,17 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 18px;
-  border: 2px solid var(--ink);
-  background: var(--paper-light);
+  /* Étiquette Dymo, comme celles des circuits dans un vrai tableau */
+  padding: 11px 18px 10px;
+  background: var(--ink);
+  color: #f4efe2;
   font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: rotate(-0.8deg);
 }
 
 .t0 { --c: var(--cable-0); }
@@ -52,9 +55,9 @@
 
 /* Petit voyant de la couleur du câble qui alimente la section */
 .sectionLed {
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--ink);
+  width: 11px;
+  height: 11px;
+  border: 2px solid #f4efe2;
   border-radius: 50%;
   background: var(--c);
 }
@@ -73,6 +76,8 @@
 
 /* ===== Cards de prestations ===== */
 .serviceGrid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
@@ -83,17 +88,30 @@
 .serviceCard {
   display: flex;
   flex-direction: column;
-  padding: 12px 12px 16px;
-  border: 2px solid var(--ink);
+  padding: 10px 10px 16px;
+  border: 3px solid var(--ink);
+  border-radius: 3px;
   background: var(--paper-light);
 }
 
 .serviceMedia {
+  position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   margin-bottom: 12px;
-  border: 2px solid var(--ink);
+  border: 3px solid var(--ink);
   background: var(--paper-dark);
+}
+
+/* Trame de points par-dessus la photo, façon affiche imprimée */
+.serviceMedia::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(29, 26, 22, 0.16) 0.8px, transparent 1.2px);
+  background-size: 5px 5px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
 .serviceMedia img {
@@ -102,7 +120,7 @@
   height: 100%;
   object-fit: cover;
   /* Léger traitement rétro pour harmoniser des photos d'origines différentes */
-  filter: saturate(0.82) contrast(1.05) sepia(0.12);
+  filter: saturate(0.75) contrast(1.08) sepia(0.2);
 }
 
 .serviceTitle {

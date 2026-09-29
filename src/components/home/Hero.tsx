@@ -18,9 +18,10 @@ function Voltmeter() {
 
   return (
     <svg className={styles.voltmeter} viewBox="0 0 200 118" role="img" aria-label="Voltmètre : 230 volts">
-      <rect x="4" y="4" width="192" height="110" rx="14" className={styles.vmBody} />
+      <rect x="4" y="4" width="192" height="110" rx="4" className={styles.vmBody} />
+      <circle cx="14" cy="14" r="3" className={styles.vmScrew} />
+      <circle cx="186" cy="14" r="3" className={styles.vmScrew} />
       <path d="M 26 84 A 74 74 0 0 1 174 84 Z" className={styles.vmFace} />
-      <path d="M 148 84 A 48 48 0 0 1 150 70" className={styles.vmRed} />
       {ticks.map((t, i) => (
         <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} className={styles.vmTick} />
       ))}
@@ -44,18 +45,54 @@ function Voltmeter() {
   );
 }
 
+// Écran de terminal à phosphore vert, façon vieux terminal industriel
+const TERMINAL_LINES = [
+  ["Expérience", "4 ans"],
+  ["Urgences", "7j/7"],
+  ["Zone", "Toulouse +30 km"],
+  ["Devis", "Gratuit"],
+];
+
+function Terminal() {
+  return (
+    <div className={styles.terminal}>
+      <div className={styles.screen}>
+        <p className={styles.termHead}>FAKEELEC INDUSTRIES (TM) TERMLINK</p>
+        <ul className={styles.termList}>
+          {TERMINAL_LINES.map(([k, v]) => (
+            <li key={k}>
+              <span>&gt; {k}</span>
+              <span className={styles.termDots} aria-hidden="true" />
+              <span>{v}</span>
+            </li>
+          ))}
+        </ul>
+        <p className={styles.termStatus}>
+          &gt; Statut : en service<span className={styles.cursor} aria-hidden="true" />
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Hero() {
   return (
     <section className={styles.hero} aria-label="Accueil">
       <div className={styles.frame} data-wire-frame="main">
         <div className={styles.panel}>
+          {/* Rivets aux quatre coins du coffret */}
+          <span className={`${styles.rivet} ${styles.rivetTl}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetTr}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetBl}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetBr}`} aria-hidden="true" />
+
           <div className={styles.panelBody}>
             <div className={styles.intro}>
               <h1 className={styles.title}>{SITE.brand}</h1>
-              <p className={styles.subTitle}>Électricien à {SITE.city}</p>
+              <p className={styles.dymo}>Électricien à {SITE.city}</p>
               <p className={styles.lead}>
                 Installations, rénovation et dépannage électrique pour particuliers et professionnels.
-                Devis gratuit, travaux aux normes NF C 15-100.
+                Travaux aux normes NF C 15-100.
               </p>
 
               <div className={styles.ctas}>
@@ -67,20 +104,7 @@ export default function Hero() {
                 </a>
               </div>
 
-              <ul className={styles.facts}>
-                <li className={styles.fact}>
-                  <strong>4 ans</strong>
-                  <span>d’expérience</span>
-                </li>
-                <li className={styles.fact}>
-                  <strong>7j/7</strong>
-                  <span>selon urgence</span>
-                </li>
-                <li className={styles.fact}>
-                  <strong>Toulouse</strong>
-                  <span>et alentours</span>
-                </li>
-              </ul>
+              <Terminal />
             </div>
 
             {/* Le tableau : un disjoncteur par section, chacun alimente la sienne */}
@@ -93,15 +117,20 @@ export default function Hero() {
                     <span className={styles.switch} aria-hidden="true">
                       <span className={styles.lever} />
                     </span>
-                    <span className={styles.breakerLabel}>
-                      {s.label}
-                    </span>
+                    <span className={styles.breakerLabel}>{s.label}</span>
                     {/* Presse-étoupe : le câble de la section sort du tableau ici */}
                     <span data-wire-anchor={`hero-pin-${i}`} className={styles.gland} aria-hidden="true" />
                   </a>
                 ))}
               </nav>
             </div>
+          </div>
+
+          {/* Bande de signalisation en bas du coffret */}
+          <div className={styles.hazard}>
+            <span className={styles.hazardSign}>
+              <span aria-hidden="true">⚡</span> Danger · Haute tension
+            </span>
           </div>
         </div>
       </div>

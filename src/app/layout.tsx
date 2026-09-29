@@ -23,6 +23,14 @@ const titleFont = localFont({
   display: "swap",
 });
 
+// Police de terminal à phosphore vert
+const monoFont = localFont({
+  src: "../fonts/VT323-latin.woff2",
+  weight: "400",
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "FakeElec · Électricien à Toulouse",
   description:
@@ -31,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${bodyFont.variable} ${titleFont.variable}`}>
+    <html lang="fr" className={`${bodyFont.variable} ${titleFont.variable} ${monoFont.variable}`}>
       <body>
         <Navbar />
         <main>{children}</main>
