@@ -8,34 +8,70 @@
 }
 
 /* ===== Sections ===== */
-.section {
-  position: relative;
-  z-index: 1;
-  padding: 0 0 150px;
-}
-
+.section,
 .sectionLast {
   position: relative;
   z-index: 1;
-  padding: 0 0 160px;
+  padding: 0 0 96px;
+  /* La navbar fixe ne cache pas le haut du boîtier quand on clique dans le menu */
+  scroll-margin-top: 96px;
 }
 
-.sectionInner {
+.sectionLast {
+  padding-bottom: 120px;
+}
+
+/* ===== Le sous-boîtier (même tôle que le coffret de la landing) ===== */
+/* La tôle prend la couleur du câble qui alimente la section */
+.box {
+  --c: var(--cable-0);
   position: relative;
-  padding-top: 18px;
+  /* Même largeur que le coffret : les câbles descendent dans l'espace libre à droite */
+  width: calc(100% - 200px);
+  padding: 22px;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  background: var(--c);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.18);
 }
 
-/* Étiquette de section : même look que le disjoncteur qui l'alimente */
+.rivet {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0 20%, var(--steel) 45%, var(--steel-dark) 100%);
+}
+
+.rivetTl { top: 7px; left: 7px; }
+.rivetTr { top: 7px; right: 7px; }
+.rivetBl { bottom: 7px; left: 7px; }
+.rivetBr { bottom: 7px; right: 7px; }
+
+/* Tête du boîtier : étiquette + accroche, sur une bande crème */
+.head {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  margin-bottom: 22px;
+  padding: 16px 20px;
+  border: 3px solid var(--ink);
+  background: var(--paper-light);
+}
+
+/* Étiquette Dymo, comme celles des circuits dans un vrai tableau */
 .sectionTitle {
   --c: var(--cable-0);
-  position: absolute;
-  top: 0;
-  left: 0;
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  /* Étiquette Dymo, comme celles des circuits dans un vrai tableau */
-  padding: 11px 18px 10px;
+  margin: 0;
+  padding: 10px 16px 9px;
   background: var(--ink);
   color: #f4efe2;
   font-family: var(--font-body), system-ui, sans-serif;
@@ -61,27 +97,33 @@
   background: var(--c);
 }
 
-.sectionBody {
-  padding-top: 84px;
-}
-
 .tagline {
-  max-width: 640px;
-  margin: 0 0 22px;
-  font-size: 17px;
+  flex: 1;
+  min-width: 260px;
+  margin: 0;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--muted);
 }
 
+/* Presse-étoupe sur la paroi du boîtier, au niveau de l'étiquette */
+.gland {
+  position: absolute;
+  top: 50%;
+  right: -36px;
+  width: 16px;
+  height: 22px;
+  transform: translateY(-50%);
+  border: 3px solid var(--ink);
+  border-radius: 3px;
+  background: var(--steel-dark);
+}
+
 /* ===== Cards de prestations ===== */
 .serviceGrid {
-  position: relative;
-  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  /* Laisse la place aux câbles qui descendent à droite */
-  margin-right: 130px;
 }
 
 .serviceCard {
@@ -124,8 +166,9 @@
 
 .serviceTitle {
   margin: 0 0 6px;
+  padding: 0 4px;
   font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0;
@@ -133,9 +176,17 @@
 
 .serviceDesc {
   margin: 0;
+  padding: 0 4px;
   font-size: 14.5px;
   line-height: 1.5;
   color: var(--muted);
+}
+
+/* Le contact garde sa mise en page, posé dans le boîtier */
+.contactWrap {
+  padding: 20px;
+  border: 3px solid var(--ink);
+  background: var(--paper-light);
 }
 
 @media (max-width: 1180px) {
@@ -149,12 +200,12 @@
     width: calc(100vw - 48px);
   }
 
-  .serviceGrid {
-    margin-right: 110px;
+  .box {
+    width: calc(100% - 110px);
   }
 
   .section {
-    padding-bottom: 110px;
+    padding-bottom: 72px;
   }
 }
 
@@ -163,12 +214,28 @@
     width: calc(100vw - 32px);
   }
 
+  .box {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .head {
+    padding: 14px;
+  }
+
+  .gland {
+    display: none;
+  }
+
   .serviceGrid {
     grid-template-columns: 1fr;
-    margin-right: 0;
   }
 
   .sectionTitle {
-    font-size: 17px;
+    font-size: 16px;
+  }
+
+  .contactWrap {
+    padding: 14px;
   }
 }

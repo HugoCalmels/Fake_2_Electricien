@@ -75,7 +75,6 @@ export default function WireNetwork({
 }) {
   const clipRectRef = useRef<SVGRectElement | null>(null);
   const cableRefs = useRef<CablePaths[]>([]);
-  const plugRefs = useRef<Array<SVGGElement | null>>([]);
   const clampRefs = useRef<Array<SVGGElement | null>>([]);
   const rafRef = useRef<number>(0);
 
@@ -111,7 +110,6 @@ export default function WireNetwork({
         const a = from && rect(from.key);
         const b = to && rect(to.key);
         const cable = cableRefs.current[i];
-        const plug = plugRefs.current[i];
         if (!a || !b || !cable) {
           runs[i] = null;
           continue;
@@ -121,12 +119,11 @@ export default function WireNetwork({
         const y2 = snap(clamp(b.top + b.height / 2, -OFF, vpH + OFF));
         const x = xs[i];
         const xStart = snap(a.right);
-        const xEnd = snap(b.right + 14); // laisse la place à la fiche de raccordement
+        const xEnd = snap(b.right); // le câble entre par le presse-étoupe de la section
 
         cable.outline?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND));
         cable.sheath?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND));
         cable.shine?.setAttribute("d", cablePath(xStart, y1, x, y2, xEnd, BEND, -1.6, -1.6));
-        plug?.setAttribute("transform", `translate(${snap(b.right)} ${y2})`);
 
         runs[i] = { top: y1 + BEND, bottom: y2 - BEND };
       }
@@ -192,17 +189,6 @@ export default function WireNetwork({
         {order.map((i) => (
           <g key={`cable-${i}`} className={styles[`g${i}`]}>
             <Cable wireIndex={i} store={store(i)} />
-            {/* Fiche de raccordement, à l'arrivée sur la section */}
-            <g
-              ref={(el) => {
-                plugRefs.current[i] = el;
-              }}
-              className={styles.plug}
-            >
-              <rect x="0" y="-9" width="16" height="18" />
-              <line x1="5" y1="-4" x2="5" y2="4" />
-              <line x1="10" y1="-4" x2="10" y2="4" />
-            </g>
           </g>
         ))}
 

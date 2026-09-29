@@ -27,13 +27,49 @@ function ServiceGrid({ items }: { items: Service[] }) {
   );
 }
 
-// Étiquette de section, identique à celle du disjoncteur qui l'alimente
-function SectionLabel({ id, label, index }: { id: string; label: string; index: number }) {
+/**
+ * Une section = un sous-boîtier électrique, dans le même langage que le coffret
+ * de la landing : tôle bleue rivetée, étiquette Dymo, et un presse-étoupe sur la
+ * paroi par lequel entre le câble qui l'alimente.
+ */
+function SectionBox({
+  id,
+  label,
+  index,
+  tagline,
+  last = false,
+  children,
+}: {
+  id: string;
+  label: string;
+  index: number;
+  tagline?: string;
+  last?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <h2 data-wire-anchor={id} className={`${styles.sectionTitle} ${styles[`t${index}`]}`}>
-      <span className={styles.sectionLed} aria-hidden="true" />
-      {label}
-    </h2>
+    <section id={id} className={last ? styles.sectionLast : styles.section}>
+      <div className={styles.frame}>
+        <div className={`${styles.box} ${styles[`t${index}`]}`}>
+          <span className={`${styles.rivet} ${styles.rivetTl}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetTr}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetBl}`} aria-hidden="true" />
+          <span className={`${styles.rivet} ${styles.rivetBr}`} aria-hidden="true" />
+
+          <header className={styles.head}>
+            <h2 className={`${styles.sectionTitle} ${styles[`t${index}`]}`}>
+              <span className={styles.sectionLed} aria-hidden="true" />
+              {label}
+            </h2>
+            {tagline ? <p className={styles.tagline}>{tagline}</p> : null}
+            {/* Presse-étoupe : le câble de la section entre dans le boîtier ici */}
+            <span data-wire-anchor={id} className={styles.gland} aria-hidden="true" />
+          </header>
+
+          {children}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -45,29 +81,16 @@ export default function Home() {
       <Hero />
 
       {CATEGORIES.map((cat, i) => (
-        <section key={cat.id} id={cat.id} className={styles.section}>
-          <div className={styles.frame}>
-            <div className={styles.sectionInner}>
-              <SectionLabel id={cat.id} label={cat.label} index={i} />
-              <div className={styles.sectionBody}>
-                <p className={styles.tagline}>{cat.tagline}</p>
-                <ServiceGrid items={cat.services} />
-              </div>
-            </div>
-          </div>
-        </section>
+        <SectionBox key={cat.id} id={cat.id} label={cat.label} index={i} tagline={cat.tagline}>
+          <ServiceGrid items={cat.services} />
+        </SectionBox>
       ))}
 
-      <section id={CONTACT_SECTION.id} className={styles.sectionLast}>
-        <div className={styles.frame}>
-          <div className={styles.sectionInner}>
-            <SectionLabel id={CONTACT_SECTION.id} label={CONTACT_SECTION.label} index={CATEGORIES.length} />
-            <div className={styles.sectionBody}>
-              <Contact />
-            </div>
-          </div>
+      <SectionBox id={CONTACT_SECTION.id} label={CONTACT_SECTION.label} index={CATEGORIES.length} last>
+        <div className={styles.contactWrap}>
+          <Contact />
         </div>
-      </section>
+      </SectionBox>
     </div>
   );
 }
