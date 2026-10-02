@@ -355,10 +355,10 @@ a.serviceCard:hover .cardMore {
   flex: 1;
 }
 
-/* Liseré de la couleur de la section, en haut du contenu
+/* Cadre de la couleur de la section, tout autour du contenu
    (sélecteur doublé : doit l'emporter sur le contour du bloc, défini dans un autre module) */
 .accent.accent {
-  border-top: 8px solid var(--c);
+  border: 8px solid var(--c);
 }
 
 @media (max-width: 960px) {
