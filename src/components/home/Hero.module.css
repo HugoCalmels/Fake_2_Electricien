@@ -345,8 +345,9 @@
     grid-template-columns: 1fr;
   }
 
+  /* Décoratif : masqué sur une colonne pour raccourcir la section */
   .voltmeter {
-    max-width: 280px;
+    display: none;
   }
 }
 
