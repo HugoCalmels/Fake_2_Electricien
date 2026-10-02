@@ -345,9 +345,8 @@
     grid-template-columns: 1fr;
   }
 
-  /* Décoratif : masqué sur une colonne pour raccourcir la section */
   .voltmeter {
-    display: none;
+    max-width: 280px;
   }
 }
 
@@ -382,6 +381,11 @@
 
   .facts {
     grid-template-columns: 1fr;
+  }
+
+  /* Décoratif : masqué sur mobile pour raccourcir la section */
+  .voltmeter {
+    display: none;
   }
 
   /* Presse-étoupe réduit, posé sur la paroi du coffret */
