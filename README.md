@@ -3,7 +3,7 @@
 Site d'un électricien fictif à Toulouse : 25 pages, design libre, des câbles qui alimentent chaque section.
 Démo, faux client.
 
-[Site](https://fakeelec.netlify.app/) · [Captures et présentation](https://hugo-calmels.fr/fr/sites-web/site-statique)
+[Site](https://fakeelec.netlify.app/) · [Captures et présentation](https://hugo-calmels.fr/sites-web/site-statique)
 
 ## Fonctionnalités
 

@@ -56,7 +56,7 @@ export default function Footer() {
           <div className={styles.footerMeta}>
             Développé par{" "}
             <Link
-              href="https://hugo-calmels.fr/en"
+              href="https://hugo-calmels.fr/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.footerDevLink}
